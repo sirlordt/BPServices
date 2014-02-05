@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM  "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Database maps for tables and fields "Select __tblOperators.IdOperator__ From __tblOperators__ Where __tblOperators.Name__ = @@ValueName@@ And __tblOperators.Password__ = @@ValuePassword@@" => "Select IdOperator From tblOperators Where Name=@@ValueName@@ And Password=@@ValuePassword@@"</comment>
+
+<!-- Table -->
+<entry key="__tblAuditSystem__">tblAuditSystem</entry>
+<!-- Fields -->
+<entry key="__tblAuditSystem.IdAudit__">IdAudit</entry>
+<entry key="__tblAuditSystem.Operator__">Operator</entry>
+<entry key="__tblAuditSystem.Code__">Code</entry>
+<entry key="__tblAuditSystem.Date__">Date</entry>
+<entry key="__tblAuditSystem.Time__">Time</entry>
+<entry key="__tblAuditSystem.Description__">Description</entry>
+<entry key="__tblAuditSystem.CreatedDate__">CreatedDate</entry>
+<entry key="__tblAuditSystem.CreatedTime__">CreatedTime</entry>
+
+<!-- Table -->
+<entry key="__tblAuditDB__">tblAuditDB</entry>
+<!-- Fields -->
+<entry key="__tblAuditDB.IdAudit__">IdAudit</entry>
+<entry key="__tblAuditDB.Operator__">Operator</entry>
+<entry key="__tblAuditDB.CreatedDate__">CreatedDate</entry>
+<entry key="__tblAuditDB.CreatedTime__">CreatedTime</entry>
+<entry key="__tblAuditDB.Table__">Table</entry>
+<entry key="__tblAuditDB.ID__">ID</entry>
+<entry key="__tblAuditDB.Action__">Action</entry>
+<entry key="__tblAuditDB.Description__">Description</entry>
+
+<!-- Table -->
+<entry key="__tblSystemConfig__">tblSystemConfig</entry>
+<!-- Fields -->
+<entry key="__tblSystemConfig.IdConfig__">IdConfig</entry>
+<entry key="__tblSystemConfig.Value__">Value</entry>
+<entry key="__tblSystemConfig.ValueBLOB__">ValueBLOB</entry>
+
+<!-- Table -->
+<entry key="__tblGroups__">tblGroups</entry>
+<!-- Fields -->
+<entry key="__tblGroups.IdGroup__">IdGroup</entry>
+<entry key="__tblGroups.Active__">Active</entry>
+<entry key="__tblGroups.SystemAdmin__">SystemAdmin</entry>
+<entry key="__tblGroups.Name__">Name</entry>
+<entry key="__tblGroups.Comment__">Comment</entry>
+<entry key="__tblGroups.CreatedDate__">CreatedDate</entry>
+<entry key="__tblGroups.CreatedTime__">CreatedTime</entry>
+<entry key="__tblGroups.SystemRecord__">SystemRecord</entry>
+<entry key="__tblGroups.ReadOnlyRecord__">ReadOnlyRecord</entry>
+<entry key="__tblGroups.UpdateControl__">UpdateControl</entry>
+
+<!-- Table -->
+<entry key="__tblOperators__">tblOperators</entry>
+<!-- Fields -->
+<entry key="__tblOperators.IdOperator__">IdOperator</entry>
+<entry key="__tblOperators.IdGroup__">IdGroup</entry>
+<entry key="__tblOperators.Active__">Active</entry>
+<entry key="__tblOperators.ShowInList__">ShowInList</entry>
+<entry key="__tblOperators.Name__">Name</entry>
+<entry key="__tblOperators.Password__">Password</entry>
+<entry key="__tblOperators.Comment__">Comment</entry>
+<entry key="__tblOperators.CreatedDate__">CreatedDate</entry>
+<entry key="__tblOperators.CreatedTime__">CreatedTime</entry>
+<entry key="__tblOperators.SystemRecord__">SystemRecord</entry>
+<entry key="__tblOperators.ReadOnlyRecord__">ReadOnlyRecord</entry>
+<entry key="__tblOperators.UpdateControl__">UpdateControl</entry>
+
+<!-- Table -->
+<entry key="__tblModules__">tblModules</entry>
+<!-- Fields -->
+<entry key="__tblModules.IdModule__">IdModule</entry>
+<entry key="__tblModules.ActiveUI__">ActiveUI</entry>
+<entry key="__tblModules.ActiveBackend__">ActiveBackend</entry>
+<entry key="__tblModules.Name__">Name</entry>
+<entry key="__tblModules.Comment__">Comment</entry>
+<entry key="__tblModules.CreatedDate__">CreatedDate</entry>
+<entry key="__tblModules.CreatedTime__">CreatedTime</entry>
+<entry key="__tblModules.SystemRecord__">SystemRecord</entry>
+<entry key="__tblModules.ReadOnlyRecord__">ReadOnlyRecord</entry>
+<entry key="__tblModules.UpdateControl__">UpdateControl</entry>
+
+<!-- Table -->
+<entry key="__tblActions__">tblActions</entry>
+<!-- Fields -->
+<entry key="__tblActions.IdAction__">IdAction</entry>
+<entry key="__tblActions.IdModule__">IdModule</entry>
+<entry key="__tblActions.Name__">Name</entry>
+<entry key="__tblActions.Actions__">Actions</entry>
+<entry key="__tblActions.Comment__">Comment</entry>
+<entry key="__tblActions.CreatedDate__">CreatedDate</entry>
+<entry key="__tblActions.CreatedTime__">CreatedTime</entry>
+<entry key="__tblActions.SystemRecord__">SystemRecord</entry>
+<entry key="__tblActions.ReadOnlyRecord__">ReadOnlyRecord</entry>
+<entry key="__tblActions.UpdateControl__">UpdateControl</entry>
+
+<!-- Table -->
+<entry key="__tblPrivileges__">tblPrivileges</entry>
+<!-- Fields -->
+<entry key="__tblPrivileges.IdAction__">IdAction</entry>
+<entry key="__tblPrivileges.IdGroup__">IdGroup</entry>
+<entry key="__tblPrivileges.CreatedDate__">CreatedDate</entry>
+<entry key="__tblPrivileges.CreatedTime__">CreatedTime</entry>
+
+<!-- Table -->
+<entry key="__tblRestrictions__">tblRestrictions</entry>
+<!-- Fields -->
+<entry key="__tblRestrictions.IdAction__">IdAction</entry>
+<entry key="__tblRestrictions.IdOperator__">IdOperator</entry>
+<entry key="__tblRestrictions.CreatedDate__">CreatedDate</entry>
+<entry key="__tblRestrictions.CreatedTime__">CreatedTime</entry>
+
+<!-- Table -->
+<entry key="__tblModulesConfig__">tblModulesConfig</entry>
+<!-- Fields -->
+<entry key="__tblModulesConfig.IdModule__">IdModule</entry>
+<entry key="__tblModulesConfig.IdConfig__">IdConfig</entry>
+<entry key="__tblModulesConfig.Value__">Value</entry>
+<entry key="__tblModulesConfig.ValueBLOB__">ValueBLOB</entry>
+
+<!-- Table -->
+<entry key="__tblOperatorsConfig__">tblOperatorsConfig</entry>
+<!-- Fields -->
+<entry key="__tblOperatorsConfig.IdOperator__">IdOperator</entry>
+<entry key="__tblOperatorsConfig.IdConfig__">IdConfig</entry>
+<entry key="__tblOperatorsConfig.Value__">Value</entry>
+<entry key="__tblOperatorsConfig.ValueBLOB__">ValueBLOB</entry>
+
+<!-- Table -->
+<entry key="__tblGroupsConfig__">tblGroupsConfig</entry>
+<!-- Fields -->
+<entry key="__tblGroupsConfig.IdGroup__">IdGroup</entry>
+<entry key="__tblGroupsConfig.IdConfig__">IdConfig</entry>
+<entry key="__tblGroupsConfig.Value__">Value</entry>
+<entry key="__tblGroupsConfig.ValueBLOB__">ValueBLOB</entry>
+
+</properties>

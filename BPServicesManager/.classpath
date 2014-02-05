@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="BPServicesManager"/>
+	<classpathentry kind="src" path="BPCommonLibs"/>
+	<classpathentry kind="lib" path="/home/sirlordt/Documentos/git/servicesdaemon/ServicesDaemon/distro-bin/ServicesDaemon/Libs/CommonLibs.jar" sourcepath="/ServicesDaemon/CommonLibs"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-7-oracle"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jetty-9.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/servlet-3.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Apache HttpClient"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

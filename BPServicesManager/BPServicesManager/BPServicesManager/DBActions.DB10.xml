@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+<!-- 
+
+  Phase 1 SQL from Action DB 
+  1) "Select __VeryLargeAndDescriptiveFieldId__ From __tblVeryLargeAndDescriptiveTableName__ Where __VeryLargeAndDescriptiveFieldName__ = @@ValueName@@ And __VeryLargeAndDescriptiveFieldPassword__ = @@ValuePassword@@" 
+  Phase 2 Map Fields Names And Tables Names to real DB names 
+  2) "Select Id From tblUsers Where Nam = @@ValueName@@ And Pass = @@ValuePassword@@"
+  Phase 3 Convert input param values to correct format to ServiceDaemon /DBServices  
+  3) "Select Id From tblUsers Where Nam = [paramvalue]@@ValueName@@[/paramvalue] And Pass = [paramvalue]@@ValuePassword@@[/paramvalue]" 
+   
+-->
+
+<ActionDB ID="0x1234" Description="Used for sample">
+  
+  <Command>Select __VeryLargeAndDescriptiveFieldId__ From __tblVeryLargeAndDescriptiveTableName__ Where __VeryLargeAndDescriptiveFieldName__ = @@ValueName@@ And _VeryLargeAndDescriptiveFieldPassword_ = @@ValuePassword@@</Command>
+  <Map>__tblVeryLargeAndDescriptiveTableName__</Map>
+  <Map>__VeryLargeAndDescriptiveFieldId__</Map>
+  <Map>__VeryLargeAndDescriptiveFieldName__</Map>
+  <Map>__VeryLargeAndDescriptiveFieldPassword__</Map>
+  <InputParam datatype="varchar">@@ValueName@@</InputParam>
+  <InputParam datatype="varchar">@@ValuePassword@@</InputParam>
+  
+</ActionDB>
+
+</Config>

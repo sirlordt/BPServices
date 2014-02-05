@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM  "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Database maps for tables and fields "Select __VeryLargeAndDescriptiveFieldId__ From __tblVeryLargeAndDescriptiveTableName__ Where __VeryLargeAndDescriptiveFieldName__ = @@ValueName@@ And __VeryLargeAndDescriptiveFieldPassword__ = @@ValuePassword@@" => "Select Id From tblUsers Where Nam=@@ValueName@@ And Pass=@@ValuePassword@@"</comment>
+
+<entry key="_tblVeryLargeAndDescriptiveTableName_">tblUsers</entry>
+<entry key="_VeryLargeAndDescriptiveFieldId_">Id</entry>
+<entry key="_VeryLargeAndDescriptiveFieldName_">Nam</entry>
+<entry key="_VeryLargeAndDescriptiveFieldPassword_">Pass</entry>
+
+</properties>

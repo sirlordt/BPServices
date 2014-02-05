@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM  "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Language file messages translations</comment>
+
+<entry key="Reading XML database connection: [%s]">Leyendo conexión a base de datos XML: [%s]</entry>
+<entry key="Connection database defined and added. Name: [%s], URL: [%s], Database: [%s], User: [%s], Password: [%s], Maps_File: [%s], DBActions_File: [%s], DBDefinitions_File: [%s]">Conexión de base de datos definida y agregada. Name: [%s], URL: [%s], Database: [%s], User: [%s], Password: [%s], Maps_File: [%s], DBActions_File: [%s], DBDefinitions_File: [%s]</entry>
+<entry key="The DB connection name: [%s] is used in previus DB connection config index: [%s], the name attribute must be unique">El nombre [%s] de la conexión de base de datos, ya es usada en una definición previa, la número [%s], el nombre debe ser único</entry>
+<entry key="DB connection config attributes is not valid">Los atributos para la conexión a la base de datos no son válidos</entry>
+<entry key="No valid database connections defined">No hay conexiones a base de datos válidas definidas</entry>
+<entry key="Count of database connections defined: [%s]">Cantidad de conexiones a bases de datos definidas: [%s]</entry>
+<entry key="Reading XML built in response format: [%s]">Leyendo formato de respuesta incorporado XML: [%s]</entry>
+<entry key="Loading database maps from file [%s]">Cargando mapas de base de datos del archivo [%s]</entry>
+<entry key="Loading DBActions from file [%s]">Cargando DBActions del archivo [%s]</entry>
+
+<entry key="No responses formats drivers found in path [%s]">No hay controladores de formato de respuesta en la ruta:[%s]</entry>
+<entry key="No business process services found in path [%s]">No hay servicios de procesos de negocios en la ruta: [%s]</entry>
+
+<entry key="Registered response format: [%s] min version: [%s] max version: [%s]">Formato de respuesta: [%s] versión mínima: [%s] versión máxima: [%s] registrado</entry>
+
+<entry key="Adding to end of list the built in responses formats">Agregando al final de la lista los formatos de respuestas incorporados</entry>
+<entry key="Added built in response format [%s] min version: [%s] max version: [%s]">Agregando el formato de respuesta incorporado [%s] versión mínima: [%s] versión máxima: [%s]</entry>
+
+<entry key="The default response format [$s] version [%s] not found">El formato de respuesta por defecto [%s] versión [%s] no fue encontrado</entry>
+<entry key="The default response format [$s] found, but the version [%s] not found, using the min version [%s] available">El formato de respuesta por defecto [%s] fue encontrado, pero la versión [%s] no fue encontrada, usando la vesión mínima disponible [%s]</entry>
+
+<entry key="Using default response format: [$s] min version: [%s]">Usando el como formato de respuesa por defecto: [%s] versión mínima: [%s]</entry>
+<entry key="Count of responses formats registered: [%s]">Cantidad de formatos de respuestas registrados: [%s]></entry>
+
+<entry key="[%s] from [%s] = [%s] not found">[%s] usando [%s] = [%s] no fue encontrado</entry>
+<entry key="Added [%s] [%s] = [%s] and [%s] = [%s]">Agregado [%s] [%s] = [%s] y [%s] = [%s]</entry>
+<entry key="Removed [%s] by [%s] = [%s]">Eliminado [%s] por [%s] = [%s]</entry>
+
+<entry key="The security token [%s] is incorrect. Possible attempted robbery in progress session">El token de seguridad [%s] es incorrecto. Posible intento de robo de sesión en progreso</entry>
+<entry key="You must log in before using the service [%s]">Debe iniciar sesión antes de usar el servicio [%s]</entry>
+<entry key="The service name [%s] not found">El servicio de nombre [%s] no fue encontrado</entry>
+<entry key="Fatal error, no response format found">Error fatal, ningún formato de respuesta encontrado</entry>
+
+<entry key="Registered service: [%s] description: [%s] version: [%s]">Servicio: [%s] regitrado descripción: [%s] versión: [%s]</entry>
+<entry key="Count of services registered: [%s]">Cantidad de servicios registrados: [%s]</entry>
+<entry key="The service name [%s] return negative value [%s]">El servicio de nombre [%s] retorna un valor negativo [%s]</entry>
+<entry key="The service name is empty, request from ip address [%s], forwarded from [%s]">El nombre del servicio es vacío, petición realizada desde la dirección IP [%s], reenviado de [%s]</entry>
+<entry key="Service [%s] input params count: [%s]">Servicio [%s] cantidad de parámetros de entrada: [%s]</entry>
+<entry key="The SQL statement [%s] not has results for transaction id: [%s]">La instrucción SQL [%s] no tiene resultados para el id de transacción: [%s]</entry>
+
+
+
+<entry key="Added the DBAction to list ID = [%s]">DBAction agregada a la lista ID = [%S]</entry>
+<entry key="The DBAction ID = [%s] already exists in the list from DB actions. This ID must be unique for config file!">El DBAction ID [%s] ya existe en la lista de DB Actions. ¡Este ID debe ser único para el archivo de configuración!</entry>
+<entry key="The DBAction in URI [%s] contains invalid or empty values, ID = [%s] and Command = [%s]">El DBAction en el URI [%s] contiene valores inválidos o vacios, ID = [%s] y Command = [%s]</entry>
+<entry key="The value [%s] is already in the list for input parameters">El valor [%s] ya existe en la lista de paramétros de entrada</entry>
+<entry key="The value [%s] is already in the list keywords marked for maps">El valor [%s] ya existe en la lista de identificadores marcados para mapeo</entry>
+<entry key="Count of DBActions registered: [%s]">Cantidad de DBActions registrados: [%s]</entry>
+<entry key="Check for exists DBAction ID = [%s]">Verificando por la existencia del DBAction ID = [%s]</entry>
+<entry key="DBAction ID = [%s] exists">DBAction ID = [%s] existe</entry>
+<entry key="Get DBAction ID = [%s]">Obteniendo DBAction ID = [%s]</entry>
+<entry key="DBAction ID = [%s] found and returned">DBAction ID = [%s] encontrado y retornado</entry>
+<entry key="DBActions list is null">Lista de DBActions es nula</entry>
+<entry key="Get DBAction copy ID = [%s]">Obteniendo copia del DBAction ID = [%s]</entry>
+<entry key="DBAction ID = [%s] found and copied">DBAction ID = [%s] encontrado y copiado</entry>
+<entry key="DBAction ID = [%s] not exists">DBAction ID = [%s] no existe</entry>
+<entry key="DBAction ID = [%s] not found">DBAction ID = [%s] no encontrado</entry>
+<entry key="Table definition name [%s] already exists in the list of tables. This name must be unique for database definition section">El nombre [%s] de la definición de tabla ya existe en la lista. Este nombre debe ser único para la definición de la sección de la base de datos</entry>
+<entry key="Using [any] for MatchCase attribute in Field node">Usando [any] para el atributo MatchCase en el nodo Field</entry>
+<entry key="The Type value: [%s] attribute is not java (JDBC) valid SQL type">El valor del atributo Type: [%s] no es un tipo SQL de java (JDBC) válido</entry>
+<entry key="The length is zero, any size is valid for string field types">El largo es cero, cualquier tamaño es válido para los campos de tipo cadena</entry>
+<entry key="Field definition name [%s] already exists in the list of fields. This name must be unique for table definition section">El nombre [%s] de la definición del campo ya existe en la lista. Este nombre debe ser único para la definición de la sección de la tabla</entry>
+<entry key="Using [table_created] for Event attribute in Data section node">Usando [table_created] para el atributo de Event en el nodo sección Data</entry>
+<entry key="The [%s] attribute value disable the section [%s]">El valor del atributo [%s] deshabilita la sección</entry>
+<entry key="Added database definition with the next properties. Name: [%s], DBMS_Name: [%s], DBMS_Version: [%s], Tables_Defined: [%s]">Agregada definición de base de datos con las siguientes propiedades Name: [%s], DBMS_Name: [%s], DBMS_Version: [%S], Tables_Defined: [%s]</entry>
+<entry key="Database definition with the next properties. Name: [%s], DBMS_Name: [%s], DBMS_Version: [%s] already exists in the list of databases. This properties Name, DBMS_Name and DBMS_Version must be unique for config section">La definición de la base de datos con las siguientes propiedades. Name: [%s], DBMS_Name: [%s], DBMS_Version: [%s] ya existe en la lista de base de datos. Estas propiedades Name, SMBD_Name y SMBD_Version deben ser únicas para la definición de la sección de la configuración</entry>
+<entry key="No tables definitions for the database. Name: [%s], DBMS_Name: [%s], DBMS_Version: [%s]. Ignoring section">No hay tablas definidas para la base de datos. Name: [%s], DBMS_Name: [%s], DBMS_Version: [%s]. Ignorando sección</entry>
+<entry key="Added table definition [%s] for the database name: [%s]">Agregada definición de tabla [%s] para la base de datos de nombre: [%s]</entry>
+<entry key="Added field definition [%s] type [%s] for the table name: [%s]">Agregado definición de campo [%s] tipo [%s] para la base de datos de nombre: [%s]</entry>
+<entry key="Using [none] for type attribute">Usando [none] para el atributo tipo</entry>
+<entry key="Using [insert] for action attribute">Usando [insert] para el atributo acción</entry>
+<entry key="Added data definition ID [%s] for the table name: [%s]">Agregada definición de data [%s] para la tabla de nombre: [%s]</entry>
+<entry key="Data definition ID [%s] already exists in the list of data. This ID must be unique for table definition section">El ID [%s] de la definición de la data ya existe en la lista. Este ID debe ser único para la definición de la sección de la tabla</entry>
+<entry key="Data definition ID [%s] and Type [%s] must have a condition">La definición de la data ID [%s] y tipo [%s] debe tener una condición</entry>
+<entry key="Data definition ID [%s] must have a command">La definición de la data ID [%s] debe tener una condición</entry>
+<entry key=""></entry>
+<entry key=""></entry>
+<entry key=""></entry>
+
+</properties>

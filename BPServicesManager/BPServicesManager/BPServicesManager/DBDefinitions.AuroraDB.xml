@@ -1,0 +1,1242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+  <Database Name="AuroraBaseDB" Description="Main database" DBMS_Name="mysql" DBMS_Version="5.1" Create_Definition="CREATE DATABASE AuroraBaseDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;">
+ 
+    <Constants>
+    
+      <Constant Name="##SystemNameKey##">SystemName</Constant>
+      <Constant Name="##SystemVersionKey##">SystemVersion</Constant>
+      <Constant Name="##SystemNameValue##">Aurora</Constant>
+      <Constant Name="##SystemVersionValue##">0.0.0.1</Constant>
+      <Constant Name="##IDGroup_GUID##">9230EFB5-3889-44A5-8B30-B011D0B49D7D</Constant>
+      <Constant Name="##IDOperator_GUID##">93DC14D8-F1CE-4893-944F-3399E8BB1CED</Constant>
+      <Constant Name="##IDMainModule_GUID##">D0CA8344-36AB-4A09-8E10-C01764277083</Constant>
+      <Constant Name="##SystemAdministratorsGroupName##">System.Administrators</Constant>
+      <Constant Name="##SystemAdministratorOperatorName##">System.Administrator</Constant>
+      <Constant Name="##UserName.Process##">BPServices</Constant>
+      
+    </Constants>
+ 
+    <!-- All attributes values Name can be mapped names to translated to real DB name using the configured file DBMaps.AuroraDB.xml -->
+    
+    <Table Name="__tblAuditSystem__" Description="Auditing more style system event log system like Linux system or windows" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+ 
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+            
+				CREATE TABLE `__tblAuditSystem__` (
+						  `__tblAuditSystem.IdAudit__` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'The audit is an up self-generated, Why not a GUID? to detect sequences deleting rows should always be continuous',
+						  `__tblAuditSystem.Operator__` VARCHAR(50) NOT NULL COMMENT 'Name of the operator who performed the action',
+						  `__tblAuditSystem.Code__` VARCHAR(40) NOT NULL COMMENT 'An event code can be for example 0x9586E to an error in one module including',
+						  `__tblAuditSystem.Date__` DATE NOT NULL COMMENT 'Date of event',
+						  `__tblAuditSystem.Time__` TIME NOT NULL COMMENT 'Time of event',
+						  `__tblAuditSystem.Description__` VARCHAR(5120) NOT NULL COMMENT 'A description of the event',
+						  `__tblAuditSystem.CreatedDate__` DATE NOT NULL COMMENT 'Record creation date',
+						  `__tblAuditSystem.CreatedTime__` TIME NOT NULL COMMENT 'Record creation time',
+						  PRIMARY KEY (`__tblAuditSystem.IdAudit__`))
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci;
+            
+            ]]></Command>
+
+            <!-- It may be more than one command -->
+            <!-- Some database systems can not add comments to tables from a CREATE TABLE statement, 
+                 as the case FIREBIRD version 1.5, you must use an ALTER TABLE statement, after creation -->
+            
+            <!-- This command is only for demonstration, MYSQL can define COMMNET to end of CREATE TABLE in one statement --> 
+            <Command><![CDATA[
+
+                 ALTER TABLE `__tblAuditSystem__` COMMENT = 'Auditing more style system event log system like Linux system or windows';
+            
+            ]]></Command>
+        
+        </CreationDefinitions> 
+        
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL COMMENT '@@field_comment@@';
+
+        ]]></AddFieldDefinition> 
+ 
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+         
+        <CheckFields>
+          
+            <Debug ID="10"/>
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblAuditSystem.IdAudit__" Type="BIGINT" Length="0" Comment="The audit is an up self-generated, Why not a GUID? to detect sequences deleting rows should always be continuous" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditSystem.Operator__" Type="VARCHAR" Length="50" Comment="Name of the operator who performed the action" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditSystem.Code__" Type="VARCHAR" Length="40" Comment="An event code can be for example 0x9586E to an error in one module including" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditSystem.Date__" Type="DATE" Length="0" Comment="Date of event" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditSystem.Time__" Type="TIME" Length="0" Comment="Time of event" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditSystem.Description__" Type="VARCHAR" Length="5120" Comment="A description of the event" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditSystem.CreatedDate__" Type="DATE" Length="0" Comment="Record creation date" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditSystem.CreatedTime__" Type="TIME" Length="0" Comment="Record creation time" NotNull="keep" Alter="true" Add="true"/>
+ 
+        </CheckFields>
+        
+        <!-- Check the data --> 
+        <CheckData>
+
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@ -->
+ 
+            <Data ID="Data01" Event="table_created" Active="true">
+                <!-- Init the data values in table ONLY after first time created table --> 
+                <!-- Always insert the data --> 
+                <Condition Type="none" Action="insert"/> 
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblAuditSystem__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','InitLayer',CurDate(),CurTime(),'Initialization of the Business Process Services Layer beginning',CurDate(),CurTime() ) ]]></Command>
+            </Data> 
+
+            <Debug ID="D02">
+            <Data ID="Data02" Event="table_exists" Active="true">
+                <!-- Init the data values in table ONLY table exists --> 
+                <!-- Always insert the data --> 
+                <Condition Type="none" Action="insert"/> 
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','InitLayer',CurDate(),CurTime(),'Initialization of the Business Process Services Layer beginning',CurDate(),CurTime() ) ]]></Command>
+            </Data> 
+            </Debug>
+
+        </CheckData>
+
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+	        <Map>__tblAuditSystem__</Map>
+	        <Map>__tblAuditSystem.IdAudit__</Map>
+	        <Map>__tblAuditSystem.Operator__</Map>
+	        <Map>__tblAuditSystem.Code__</Map>
+	        <Map>__tblAuditSystem.Date__</Map>
+	        <Map>__tblAuditSystem.Time__</Map>
+	        <Map>__tblAuditSystem.Description__</Map>
+	        <Map>__tblAuditSystem.CreatedDate__</Map>
+	        <Map>__tblAuditSystem.CreatedTime__</Map>
+        
+        </MapsNames>
+         
+    </Table>
+ 
+    <Table Name="__tblAuditDB__" Description="Audit table database whose function is to bring the track of the changes in the database generally" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+ 
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+            
+				CREATE TABLE `__tblAuditDB__` (
+						  `__tblAuditDB.IdAudit__` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'The audit is a self-generated upward Why not a GUID? to detect sequences deleting rows must always be continuous',
+						  `__tblAuditDB.Operator__` VARCHAR(50) NOT NULL COMMENT 'Name of the operator who performed the action',
+						  `__tblAuditDB.CreatedDate__` DATE NOT NULL COMMENT 'Record creation date',
+						  `__tblAuditDB.CreatedTime__` TIME NOT NULL COMMENT 'Record creation time',
+						  `__tblAuditDB.Table__` VARCHAR(128) NOT NULL COMMENT 'Name of the table on which the action was performed',
+						  `__tblAuditDB.ID__` VARCHAR(40) NOT NULL COMMENT 'GUID that references the record in the table field content',
+						  `__tblAuditDB.Action__` SMALLINT NOT NULL COMMENT '1 = Added, 2 = Modification, 3 = Elimination',
+						  `__tblAuditDB.Description__` VARCHAR(5120) NOT NULL COMMENT 'Modification Example: \"Name: Null -> Salsa; Description: Salsa -> 750 ml chutney\" Example Added: \"Name: null; Description: Salsa\"',
+						  PRIMARY KEY (`__tblAuditDB.IdAudit__`))
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Audit table database whose function is to bring the track of the changes in the database generally';
+  
+           ]]></Command>
+        
+        </CreationDefinitions> 
+ 
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+ 
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblAuditDB.IdAudit__" Type="BIGINT" Length="0" Comment="The audit is a self-generated upward Why not a GUID? to detect sequences deleting rows must always be continuous" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditDB.Operator__" Type="VARCHAR" Length="50" Comment="Name of the operator who performed the action" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditDB.CreatedDate__" Type="DATE" Length="0" Comment="Record creation date" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditDB.CreatedTime__" Type="TIME" Length="0" Comment="Record creation time" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditDB.Table__" Type="VARCHAR" Length="128" Comment="Name of the table on which the action was performed" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditDB.ID__" Type="VARCHAR" Length="40" Comment="GUID that references the record in the table field content" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditDB.Action__" Type="SMALLINT" Length="0" Comment="1 = Added, 2 = Modification, 3 = Elimination" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblAuditDB.Description__" Type="VARCHAR" Length="5120" Comment="Modification Example: Name: Null -> Salsa; Description: Salsa -> 750 ml chutney Example Added: Name: null; Description: Salsa" NotNull="keep" Alter="true" Add="true"/>
+ 
+        </CheckFields>
+ 
+        <!-- Check the data --> 
+        <CheckData>
+
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@ -->
+ 
+            <Data ID="Data01" Event="table_created" Active="true">
+                <!-- Init the data values in table ONLY after first time created table --> 
+                <!-- Always insert the data --> 
+                <Debug ID="11"/>
+                <Condition Type="none" Action="insert"/> 
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblAuditDB__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+            </Data>
+            
+        </CheckData>
+
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+	        <Map>__tblAuditSystem__</Map>
+	        <Map>__tblAuditDB__</Map>
+	        <Map>__tblAuditDB.IdAudit__</Map>
+	        <Map>__tblAuditDB.Operator__</Map>
+	        <Map>__tblAuditDB.CreatedDate__</Map>
+	        <Map>__tblAuditDB.CreatedTime__</Map>
+	        <Map>__tblAuditDB.Table__</Map>
+	        <Map>__tblAuditDB.ID__</Map>
+	        <Map>__tblAuditDB.Action__</Map>
+	        <Map>__tblAuditDB.Description__</Map>
+
+        </MapsNames>
+             
+    </Table>
+    
+    <Table Name="__tblSystemConfig__" Description="Store general system configurations" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+            
+				CREATE TABLE `__tblSystemConfig__` (
+						  `__tblSystemConfig.IdConfig__` VARCHAR(40) NOT NULL COMMENT 'IDConfig example \"Sequence\", \"RIF1\"',
+						  `__tblSystemConfig.Value__` VARCHAR(2048) NULL COMMENT 'Value represented as a string',
+						  `__tblSystemConfig.ValueBLOB__` BLOB NULL COMMENT 'Value represented as a raw binary value',
+						  PRIMARY KEY (`__tblSystemConfig.IdConfig__`))
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Store general system configurations';
+        
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblSystemConfig.IdConfig__" Type="VARCHAR" Length="40" Comment="IDConfig example Sequence, RIF1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblSystemConfig.Value__" Type="VARCHAR" Length="2048" Comment="Value represented as a string" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblSystemConfig.ValueBLOB__" Type="BLOB" Length="0" Comment="Value represented as a raw binary value" NotNull="keep" Alter="true" Add="true"/>
+ 
+        </CheckFields>
+
+        <!-- Check the data --> 
+        <CheckData>
+
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@ -->
+ 
+            <Data ID="Data01" Event="table_created" Active="true">
+                <!-- Init the data values in table ONLY after first time created table --> 
+                <!-- Always insert the data --> 
+                <Debug ID="12"/>
+                <Condition Type="none" Action="insert"/> 
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblSystemConfig__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblSystemConfig__ Values( '##SystemNameKey##','##SystemNameValue##',NULL ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblSystemConfig__ Values( '##SystemVersionKey##','##SystemVersionValue##',NULL ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemNameKey##',1,'__tblSystemConfig.IdConfig__: ##SystemNameKey##; __tblSystemConfig.Value__: ##SystemNameValue##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemVersionKey##',1,'__tblSystemConfig.IdConfig__: ##SystemVersionKey##; __tblSystemConfig.Value__: ##SystemVersionValue##' ) ]]></Command>
+            </Data>
+            
+            <Data ID="Data02" Event="table_exists" Active="true">
+                <!--Select * From tblSystemConfig From IdConfig = 'SystemName' And Value <> 'Aurora' -->
+                <Debug ID="13"/>
+                <Condition Type="where" Action="update"><![CDATA[ __tblSystemConfig.IdConfig__ = '##SystemNameKey##' And __tblSystemConfig.Value__ <> '##SystemNameValue##' ]]></Condition> 
+                <Command><![CDATA[ Update Into __tblSystemConfig__ Set __tblSystemConfig.Value__ = '##SystemNameValue##' Where __tblSystemConfig.IdConfig__ = '##SystemNameKey##'  ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemNameKey##',2,'__tblSystemConfig.Value__: @@__tblSystemConfig.Value__@@ -> ##SystemNameValue##' ) ]]></Command>
+            </Data>
+            
+            <Data ID="Data03" Event="table_exists" Active="true">
+                <!--Select * From tblSystemConfig From IdConfig = 'SystemName' And Value = 'Aurora' -->
+                <Condition Type="where" Action="insert"><![CDATA[ __tblSystemConfig.IdConfig__ = '##SystemNameKey##' And __tblSystemConfig.Value__ = '##SystemNameValue##' ]]></Condition> 
+                <Command><![CDATA[ Insert Into __tblSystemConfig__ Values( '##SystemNameKey##', '##SystemNameValue##', NULL ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemNameKey##',1,'__tblSystemConfig.IdConfig__: ##SystemNameKey##; __tblSystemConfig.Value__: ##SystemNameValue##' ) ]]></Command>
+            </Data>
+
+            <Data ID="Data04" Event="table_exists" Active="true">
+                <!--Select * From tblSystemConfig From IdConfig = 'SystemVersion' And Value <> '0.0.0.1' -->
+                <Condition Type="where" Action="update"><![CDATA[ __tblSystemConfig.IdConfig__ = '##SystemVersionKey##' And __tblSystemConfig.Value__ <> '##SystemVersionValue##' ]]></Condition> 
+                <Command><![CDATA[ Update Into __tblSystemConfig__ Set __tblSystemConfig.Value__ = '##SystemVersionValue##' Where __tblSystemConfig.IdConfig__ = '##SystemVersionKey##'  ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemVersionKey##',2,'__tblSystemConfig.Value__: @@__tblSystemConfig.Value__@@ -> ##SystemVersionValue##' ) ]]></Command>
+            </Data>
+            
+            <Data ID="Data05" Event="table_exists" Active="true">
+                <!--Select * From tblSystemConfig From IdConfig = 'SystemVersion' And Value = '0.0.0.1' -->
+                <Condition Type="where" Action="Insert"><![CDATA[ __tblSystemConfig.IdConfig__ = '##SystemVersionKey##' And __tblSystemConfig.Value__ = '##SystemVersionValue##' ]]></Condition> 
+                <Command><![CDATA[ Insert Into __tblSystemConfig__ Values( '##SystemVersionKey##', '##SystemVersionValue##', NULL )  ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemVersionKey##',1,'__tblSystemConfig.IdConfig__: ##SystemVersionKey##; __tblSystemConfig.Value__: ##SystemVersionValue##' ) ]]></Command>
+            </Data>
+            
+        </CheckData>
+
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+            <Map>__tblAuditDB__</Map>
+	        <Map>__tblAuditSystem__</Map>
+	        <Map>__tblSystemConfig__</Map>
+	        <Map>__tblSystemConfig.IdConfig__</Map>
+	        <Map>__tblSystemConfig.Value__</Map>
+	        <Map>__tblSystemConfig.ValueBLOB__</Map>
+
+        </MapsNames> 
+
+    </Table>    
+ 
+    <Table Name="__tblGroups__" Description="Store all system operator (user) groups" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+ 
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+            
+				CREATE TABLE `__tblGroups__` (
+						  `__tblGroups.IdGroup__` VARCHAR(40) NOT NULL COMMENT 'GUID key for the entity',
+						  `__tblGroups.Active__` SMALLINT NOT NULL COMMENT '1 = Active, 0 = Inactive. If the groups is inactive, operators can not enter the system regardless of their password or privilegies',
+						  `__tblGroups.SystemAdmin__` SMALLINT NOT NULL COMMENT 'Indicates whether the operators of this group are system administrators, useful to start configuration of modules in the system',
+						  `__tblGroups.Name__` VARCHAR(50) NOT NULL COMMENT 'Must be unique you can apply a restriction (Unique)',
+						  `__tblGroups.Comment__` VARCHAR(150) NULL COMMENT 'A comment that the operator can edit using the user interface',
+						  `__tblGroups.CreatedDate__` DATE NOT NULL COMMENT 'Record creation date',
+						  `__tblGroups.CreatedTime__` TIME NOT NULL COMMENT 'Record creation time',
+						  `__tblGroups.SystemRecord__` SMALLINT NOT NULL DEFAULT 0 COMMENT '1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1',
+						  `__tblGroups.ReadOnlyRecord__` SMALLINT NOT NULL DEFAULT 0 COMMENT '1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1',
+						  `__tblGroups.UpdateControl__` VARCHAR(40) NULL COMMENT 'Control GUID changes, to avoid overwriting values ​​of an entity',
+						  UNIQUE INDEX `UNIQUE_IdGroup___tblGroups__` (`__tblGroups.IdGroup__` ASC),
+						  PRIMARY KEY (`__tblGroups.IdGroup__`),
+						  UNIQUE INDEX `UNIQUE_Name___tblGroups__` (`__tblGroups.Name__` ASC))
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Store all system operator (user) groups';
+       
+           ]]></Command>
+        
+        </CreationDefinitions> 
+ 
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+ 
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+	        <!-- Mapped fields names -->
+	        <!-- Check the next fields exists in table if not exists must be create in table -->  
+	        <!-- MatchCase attribute values = "any" or "exact" -->
+	        <Field MatchCase="any" Name="__tblGroups.IdGroup__" Type="VARCHAR" Length="40" Comment="GUID key for the entity" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.Active__" Type="SMALLINT" Length="0" Comment="1 = Active, 0 = Inactive. If the groups is inactive, operators can not enter the system regardless of their password or privilegies" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.SystemAdmin__" Type="SMALLINT" Length="0" Comment="Indicates whether the operators of this group are system administrators, useful to start configuration of modules in the system" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.Name__" Type="VARCHAR" Length="50" Comment="Must be unique you can apply a restriction (Unique)" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.Comment__" Type="VARCHAR" Length="150" Comment="A comment that the operator can edit using the user interface" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.CreatedDate__" Type="DATE" Length="0" Comment="Record creation date" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.CreatedTime__" Type="TIME" Length="0" Comment="Record creation time" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.SystemRecord__" Type="SMALLINT" Length="0" Comment="1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.ReadOnlyRecord__" Type="SMALLINT" Length="0" Comment="1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1" NotNull="keep" Alter="true" Add="true"/>
+	        <Field MatchCase="any" Name="__tblGroups.UpdateControl__" Type="VARCHAR" Length="40" Comment="Control GUID changes, to avoid overwriting values ​​of an entity" NotNull="keep" Alter="true" Add="true"/>
+             
+        </CheckFields>
+ 
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <!-- Init the data values in table ONLY after first time created table --> 
+                <!-- Always insert the data --> 
+                <Condition Type="none" Action="insert"/> 
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblGroups__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblGroups__ Values('##IDGroup_GUID##',1,1,'##SystemAdministratorsGroupName##','System administrators operators groups, automatic added',CurDate(),CurTime(),1,0,'A59C2E96-044F-49F5-A5D4-4A8C442F4436') ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','##IDGroup_GUID##',1,'__tblGroups.IdGroup__: ##IDGroup_GUID##;__tblGroups.Active__: 1;__tblGroups.SystemAdmin__: 1;__tblGroups.Name__: ##SystemAdministratorsGroupName##;__tblGroups.Comment__: System administrators operators groups, automatic added;__tblGroups.CreatedDate__: @@cur_date@@;__tblGroups.CreatedTime__: @@cur_time@@;__tblGroups.SystemRecord__: 1;__tblGroups.ReadOnlyRecord__: 0;__tblGroups.UpdateControl__: A59C2E96-044F-49F5-A5D4-4A8C442F4436' ) ]]></Command>
+            </Data>
+
+            <Data ID="Data02" Event="table_exists" Active="true">
+                <!-- Select * From tblGroups Where IdGroup <> '##IDGroup_GUID##' And Name = '##SystemAdministratorsGroupName##' --> 
+                <Condition Type="where" Action="update"><![CDATA[ __tblGroups.IdGroup__ <> '##IDGroup_GUID##' And __tblGroups.Name__ = '##SystemAdministratorsGroupName##' ]]></Condition> 
+                <Command><![CDATA[ Update __tblGroups__ Set __tblGroups.IdGroup__ = '##IDGroup_GUID##' Where __tblGroups.IdGroup__ = '${Condition.Result.Value(1,__tblGroups.IdGroup__)}$'  ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','##IDGroup_GUID##',2,'__tblGroups.IdGroup__: ${Condition.Result.Value(1,__tblGroups.IdGroup__)}$ -> ##IDGroup_GUID##' ) ]]></Command>
+            </Data>
+
+            <Data ID="Data03" Event="table_exists" Active="true">
+                <!-- Select * From tblGroups Where SystemAdmin = 1 --> 
+                <Condition Type="where" Action="update"><![CDATA[ __tblGroups.SystemAdmin__ = 0 And __tblGroups.Name__ = '##SystemAdministratorsGroupName##' ]]></Condition> 
+                <Command><![CDATA[ Update __tblGroups__ Set __tblGroups.SystemAdmin__ = 1 Where __tblGroups.IdGroup__ = '${Condition.Result.Value(1,__tblGroups.IdGroup__)}$'  ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','${Condition.Result.Value(1,__tblGroups.IdGroup__)}$',2,'__tblGroups.SystemAdmin__: 0 -> 1' ) ]]></Command>
+            </Data>
+
+            <Data ID="Data04" Event="table_exists" Active="true">
+                <!-- Select * From tblGroups Where SystemAdmin = 1 --> 
+                <Condition Type="where" Action="update"><![CDATA[ __tblGroups.SystemAdmin__ = 0 And __tblGroups.IdGroup__ = '##IDGroup_GUID##' ]]></Condition> 
+                <Command><![CDATA[ Update __tblGroups__ Set __tblGroups.SystemAdmin__ = 1 Where __tblGroups.IdGroup__ = ##IDGroup_GUID##  ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','##IDGroup_GUID##',2,'__tblGroups.SystemAdmin__: 0 -> 1' ) ]]></Command>
+            </Data>
+             
+            <Data ID="Data05" Event="table_exists" Active="true">
+                <!-- Select * From tblGroups Where SystemAdmin = 1 --> 
+                <Condition Type="where" Action="insert"><![CDATA[ __tblGroups.SystemAdmin__ = 1 ]]></Condition> 
+                <Command><![CDATA[ Insert Into __tblGroups__ Values('##IDGroup_GUID##',1,1,'##SystemAdministratorsGroupName##','System administrators operators groups, automatic added',CurDate(),CurTime(),1,0,'A59C2E96-044F-49F5-A5D4-4A8C442F4436') ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','##IDGroup_GUID##',1,'__tblGroups.IdGroup__: ##IDGroup_GUID##;__tblGroups.Active__: 1;__tblGroups.SystemAdmin__: 1;__tblGroups.Name__: ##SystemAdministratorsGroupName##;__tblGroups.Comment__: System administrators operators groups, automatic added;__tblGroups.CreatedDate__: @@cur_date@@;__tblGroups.CreatedTime__: @@cur_time@@;__tblGroups.SystemRecord__: 1;__tblGroups.ReadOnlyRecord__: 0;__tblGroups.UpdateControl__: A59C2E96-044F-49F5-A5D4-4A8C442F4436' ) ]]></Command>
+            </Data> 
+
+        </CheckData> 
+ 
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+   
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblGroups__</Map>
+            <Map>__tblGroups.IdGroup__</Map>
+            <Map>__tblGroups.Active__</Map>
+            <Map>__tblGroups.SystemAdmin__</Map>
+            <Map>__tblGroups.Name__</Map>
+            <Map>__tblGroups.Comment__</Map>
+            <Map>__tblGroups.CreatedDate__</Map>
+            <Map>__tblGroups.CreatedTime__</Map>
+            <Map>__tblGroups.SystemRecord__</Map>
+            <Map>__tblGroups.ReadOnlyRecord__</Map>
+            <Map>__tblGroups.UpdateControl__</Map>
+       
+        </MapsNames>
+
+    </Table>
+ 
+    <Table Name="__tblOperators__" Description="Store all operators (Users) system" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+            
+		        CREATE TABLE `__tblOperators__` (
+		                  `__tblOperators.IdOperator__` VARCHAR(40) NOT NULL COMMENT 'GUID key for the entity',
+		                  `__tblOperators.IdGroup__` VARCHAR(40) NOT NULL COMMENT 'GUID that indicates to the operator group belongs',
+		                  `__tblOperators.Active__` SMALLINT NOT NULL COMMENT '1 = Active, 0 = Inactive. If the operator is inactive can not enter the system regardless of their password or privileges',
+		                  `__tblOperators.ShowInList__` SMALLINT NOT NULL COMMENT '1 = Show, 0 = No show. Indicates if the user name should appear in the dropdown list of the login box when the operator turns off automaticamete is hidden from the list',
+		                  `__tblOperators.Name__` VARCHAR(50) NOT NULL COMMENT 'Name (login). Must be unique you can apply a restriction (Unique)',
+		                  `__tblOperators.Password__` VARCHAR(150) NOT NULL COMMENT 'Secret password SHA512',
+		                  `__tblOperators.Comment__` VARCHAR(150) NULL COMMENT 'A comment that the operator can edit using the user interface',
+		                  `__tblOperators.CreatedDate__` DATE NOT NULL COMMENT 'Record creation date',
+		                  `__tblOperators.CreatedTime__` TIME NOT NULL COMMENT 'Record creation time',
+		                  `__tblOperators.SystemRecord__` SMALLINT NOT NULL DEFAULT 0 COMMENT '1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1',
+		                  `__tblOperators.ReadOnlyRecord__` SMALLINT NOT NULL DEFAULT 0 COMMENT '1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1',
+		                  `__tblOperators.UpdateControl__` VARCHAR(40) NULL COMMENT 'Control GUID changes, to avoid overwriting values ​​of an entity',
+		                  PRIMARY KEY (`__tblOperators.IdOperator__`),
+		                  UNIQUE INDEX `UNIQUE_IdOperator___tblOperators__` (`__tblOperators.IdOperator__` ASC),
+		                  UNIQUE INDEX `UNIQUE_Name___tblOperators__` (`__tblOperators.Name__` ASC),
+		                  INDEX `fk_IdGroup___tblOperators___idx` (`__tblOperators.IdGroup__` ASC),
+		                  CONSTRAINT `fk_IdGroup___tblOperators__`
+		                  FOREIGN KEY (`__tblOperators.IdGroup__`)
+		                  REFERENCES `__tblGroups__` (`__tblOperators.IdGroup__`)
+		                  ON DELETE CASCADE
+		                  ON UPDATE CASCADE)
+		        ENGINE = InnoDB
+		        DEFAULT CHARACTER SET = utf8
+		        COLLATE = utf8_unicode_ci
+		        COMMENT = 'Store all operators (Users) system';
+          
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Debug Id="whatfuckinghell">
+            <Field MatchCase="any" Name="__tblOperators.IdOperator__" Type="VARCHAR" Length="40" Comment="GUID key for the entity" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.IdGroup__" Type="VARCHAR" Length="40" Comment="GUID that indicates to the operator group belongs" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.Active__" Type="SMALLINT" Length="0" Comment="1 = Active, 0 = Inactive. If the operator is inactive can not enter the system regardless of their password or privileges" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.ShowInList__" Type="SMALLINT" Length="0" Comment="1 = Show, 0 = No show. Indicates if the user name should appear in the dropdown list of the login box when the operator turns off automaticamete is hidden from the list" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.Name__" Type="VARCHAR" Length="50" Comment="Name (login). Must be unique you can apply a restriction (Unique)" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.Password__" Type="VARCHAR" Length="150" Comment="Secret password SHA512" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.Comment__" Type="VARCHAR" Length="150" Comment="A comment that the operator can edit using the user interface" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.CreatedDate__" Type="DATE" Length="0" Comment="Record creation date" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.CreatedTime__" Type="TIME" Length="0" Comment="Record creation time" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.SystemRecord__" Type="SMALLINT" Length="0" Comment="1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.ReadOnlyRecord__" Type="SMALLINT" Length="0" Comment="1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperators.UpdateControl__" Type="VARCHAR" Length="40" Comment="Control GUID changes, to avoid overwriting values ​​of an entity" NotNull="keep" Alter="true" Add="true"/>
+            </Debug>
+  
+        </CheckFields>
+
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <!-- Init the data values in table ONLY after first time created table --> 
+                <!-- Always insert the data default password 123englishchick --> 
+                <Condition Type="none" Action="insert"/> 
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblOperators__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblOperators__ Values('##IDOperator_GUID##','##IDGroup_GUID##',1, 1,'##SystemAdministratorOperatorName##', 'NDpB5qONHF/rFh5fPfkHnUHXUgjz8mqBPMhvsdy4Trh1YltV9KEJY90SLCseGjYUrTzXkeTFOKl0ak0psZaFQw==','System administrator operator, automatic added',CurDate(),CurTime(),1,0,'14286358-409A-4D00-8CD4-75512DF204CF') ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblOperators__','##IDOperator_GUID##',1,'__tblOperators.IdOperator__: ##IDOperator_GUID##; __tblOperators.IdGroup__: ##IDGroup_GUID##;__tblOperators.Active__: 1;__tblOperators.ShowInList__: 1;__tblOperators.Name__: ##SystemAdministratorOperatorName##;__tblOperators.Password__: xXx;__tblOperators.Comment__: System administrator operator, automatic added;__tblOperators.CreatedDate__: @@cur_date@@;__tblOperators.CreatedTime__: @@cur_time@@;__tblOperators.SystemRecord__: 1;__tblOperators.ReadOnlyRecord__: 0;__tblOperators.UpdateControl__: 14286358-409A-4D00-8CD4-75512DF204CF' ) ]]></Command>
+            </Data>
+
+            <Data ID="Data02" Event="table_exists" Active="true">
+                <!-- Select * From tblOperators Where IdOperators = Operator_GUID And IdGroup <> Group_GUID --> 
+                <!-- Default password 123englishchick --> 
+                <Condition Type="where" Action="update"><![CDATA[ __tblOperators.IdOperator__ = '##IDOperator_GUID##' And __tblOperators.IdGroup__ <> '##IDGroup_GUID##' ]]></Condition> 
+                <Command><![CDATA[ Update __tblOperators__ Set __tblOperators.IdGroup__ = '##IDGroup_GUID##' Where __tblOperators.IdOperator__ = ##IDOperator_GUID## ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblOperators__','##IDOperator_GUID##',2,'__tblOperators.IdGroup__: ${Condition.Result.Value(1,__tblOperators.IdGroup__)}$ -> ##IDGroup_GUID##' ) ]]></Command>
+            </Data> 
+
+            <Data ID="Data03" Event="table_exists" Active="true">
+                <!-- Select * From tblOperators Where IdGroup = Group_GUID --> 
+                <!-- Default password 123englishchick --> 
+                <Condition Type="where" Action="insert"><![CDATA[ __tblOperators.IdGroup__ = '##IDGroup_GUID##' ]]></Condition> 
+                <Command><![CDATA[ Insert Into __tblOperators__ Values('##IDOperator_GUID##','##IDGroup_GUID##',1, 1,'##SystemAdministratorOperatorName##', 'NDpB5qONHF/rFh5fPfkHnUHXUgjz8mqBPMhvsdy4Trh1YltV9KEJY90SLCseGjYUrTzXkeTFOKl0ak0psZaFQw==','System administrator operator, automatic added',CurDate(),CurTime(),1,0,'14286358-409A-4D00-8CD4-75512DF204CF') ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblOperators__','##IDOperator_GUID##',1,'__tblOperators.IdOperator__: ##IDOperator_GUID##; __tblOperators.IdGroup__: ##IDGroup_GUID##;__tblOperators.Active__: 1;__tblOperators.ShowInList__: 1;__tblOperators.Name__: ##SystemAdministratorOperatorName##;__tblOperators.Password__: xXx;__tblOperators.Comment__: System administrator operator, automatic added;__tblOperators.CreatedDate__: @@cur_date@@;__tblOperators.CreatedTime__: @@cur_time@@;__tblOperators.SystemRecord__: 1;__tblOperators.ReadOnlyRecord__: 0;__tblOperators.UpdateControl__: 14286358-409A-4D00-8CD4-75512DF204CF' ) ]]></Command>
+            </Data> 
+
+        </CheckData> 
+ 
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+   
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblGroups__</Map>
+            <Map>__tblGroups.IdGroup__</Map>
+            <Map>__tblOperators__</Map>
+            <Map>__tblOperators.IdOperator__</Map>
+            <Map>__tblOperators.IdGroup__</Map>
+            <Map>__tblOperators.Active__</Map>
+            <Map>__tblOperators.ShowInList__</Map>
+            <Map>__tblOperators.Name__</Map>
+            <Map>__tblOperators.Password__</Map>
+            <Map>__tblOperators.Comment__</Map>
+            <Map>__tblOperators.CreatedDate__</Map>
+            <Map>__tblOperators.CreatedTime__</Map>
+            <Map>__tblOperators.SystemRecord__</Map>
+            <Map>__tblOperators.ReadOnlyRecord__</Map>
+            <Map>__tblOperators.UpdateControl__</Map>
+       
+        </MapsNames>
+
+    </Table> 
+
+    <Table Name="__tblModules__" Description="Conceptually represents modules for better management of privileges" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+           
+				CREATE TABLE `__tblModules__` (
+						  `__tblModules.IdModule__` VARCHAR(40) NOT NULL COMMENT 'GUID key for the entity',
+						  `__tblModules.ActiveUI__` SMALLINT NOT NULL COMMENT '1 = Active, 0 = Inactive, indicates whether a UI layer level the module is active, useful to disable a module without having to change the privileges of visibility for operators group',
+						  `__tblModules.ActiveBackend__` SMALLINT NOT NULL COMMENT '1 = Active, 0 = Inactive, Indicates whether the layer at backend module is active, useful to avoid abuse by third-party UI to the backend directly accessing',
+						  `__tblModules.Name__` VARCHAR(75) NOT NULL COMMENT 'Should be unique to avoid confusion',
+						  `__tblModules.Comment__` VARCHAR(150) NULL COMMENT 'A comment that the operator can edit using the user interface',
+						  `__tblModules.CreatedDate__` DATE NOT NULL COMMENT 'Record creation date',
+						  `__tblModules.CreatedTime__` TIME NOT NULL COMMENT 'Record creation time',
+						  `__tblModules.SystemRecord__` SMALLINT NOT NULL COMMENT '1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1',
+						  `__tblModules.ReadOnlyRecord__` SMALLINT NOT NULL COMMENT '1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1',
+						  `__tblModules.UpdateControl__` VARCHAR(40) NULL COMMENT 'Control GUID changes, to avoid overwriting values ​​of an entity',
+						  PRIMARY KEY (`__tblModules.IdModule__`),
+						  UNIQUE INDEX `UNIQUE_IdAction___tblModules__` (`__tblModules.IdModule__` ASC),
+						  UNIQUE INDEX `UNIQUE_Name___tblModules__` (`__tblModules.Name__` ASC))
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT 'Conceptually represents modules for better management of privileges';
+
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblModules.IdModule__" Type="VARCHAR" Length="40" Comment="Control GUID changes, to avoid overwriting values ​​of an entity" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.ActiveUI__" Type="SMALLINT" Length="0" Comment="1 = Active, 0 = Inactive, indicates whether a UI layer level the module is active, useful to disable a module without having to change the privileges of visibility for operators group" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.ActiveBackend__" Type="SMALLINT" Length="0" Comment="1 = Active, 0 = Inactive, Indicates whether the layer at backend module is active, useful to avoid abuse by third-party UI to the backend directly accessing" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.Name__" Type="VARCHAR" Length="50" Comment="Should be unique to avoid confusion" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.Comment__" Type="VARCHAR" Length="150" Comment="A comment that the operator can edit using the user interface" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.CreatedDate__" Type="DATE" Length="0" Comment="Record creation date" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.CreatedTime__" Type="TIME" Length="0" Comment="Record creation time" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.SystemRecord__" Type="SMALLINT" Length="0" Comment="1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.ReadOnlyRecord__" Type="SMALLINT" Length="0" Comment="1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModules.UpdateControl__" Type="VARCHAR" Length="40" Comment="Control GUID changes, to avoid overwriting values ​​of an entity" NotNull="keep" Alter="true" Add="true"/>
+  
+        </CheckFields>
+
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <!-- Init the data values in table ONLY after first time created table --> 
+                <Condition Type="none" Action="insert"/> 
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblModules__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblModules__ Values('##IDMainModule_GUID##',1, 1,'Main.Module', 'Logical módule for main application, automatic added',CurDate(),CurTime(),1,0,NULL) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblModules__','##IDMainModule_GUID##',1,'__tblModules.IdModule__: ##IDMainModule_GUID##;__tblModules.ActiveUI__: 1;__tblModules.ActiveBackend__: 1;__tblModules.Name__: Main.Module;__tblModules.Comment__: Logical module for main application, automatic added;__tblModules.CreatedDate__: @@cur_date@@;__tblModules.CreatedTime__: @@cur_time@@;__tblModules.SystemRecord__: 1;__tblModules.ReadOnlyRecord__: 0;__tblModules.UpdateControl__: NULL' ) ]]></Command>
+            </Data>
+         
+            <Data ID="Data02" Event="table_exists" Active="true">
+                <!-- Select * From tblModules Where IdModule = Module_GUID --> 
+                <!-- Default password 123englishchick --> 
+                <Condition Type="where" Action="insert"><![CDATA[ __tblModules.IdModule__ = '##IDMainModule_GUID##' ]]></Condition> 
+                <Command><![CDATA[ Insert Into __tblModules__ Values('##IDMainModule_GUID##',1, 1,'Main.Module', 'Logical módule for main application, automatic added',CurDate(),CurTime(),1,0,NULL) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblModules__','##IDMainModule_GUID##',1,'__tblModules.IdModule__: ##IDMainModule_GUID##;__tblModules.ActiveUI__: 1;__tblModules.ActiveBackend__: 1;__tblModules.Name__: Main.Module;__tblModules.Comment__: Logical module for main application, automatic added;__tblModules.CreatedDate__: @@cur_date@@;__tblModules.CreatedTime__: @@cur_time@@;__tblModules.SystemRecord__: 1;__tblModules.ReadOnlyRecord__: 0;__tblModules.UpdateControl__: NULL' ) ]]></Command>
+            </Data> 
+         
+        </CheckData>
+            
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblModules__</Map>
+            <Map>__tblModules.IdModule__</Map>
+            <Map>__tblModules.ActiveUI__</Map>
+            <Map>__tblModules.ActiveBackend__</Map>
+            <Map>__tblModules.Name__</Map>
+            <Map>__tblModules.Comment__</Map>
+            <Map>__tblModules.CreatedDate__</Map>
+            <Map>__tblModules.CreatedTime__</Map>
+            <Map>__tblModules.SystemRecord__</Map>
+            <Map>__tblModules.ReadOnlyRecord__</Map>
+            <Map>__tblModules.UpdateControl__</Map>
+        
+        </MapsNames>
+
+    </Table>
+
+    <Table Name="__tblActions__" Description="Stores the actions that can be done on a module" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+           
+				CREATE TABLE `__tblActions__` (
+						  `__tblActions.IdAction__` VARCHAR(40) NOT NULL COMMENT 'GUID key for the entity',
+						  `__tblActions.IdModule__` VARCHAR(40) NOT NULL COMMENT 'GUID that indicates which actions belong module',
+						  `__tblActions.Name__` VARCHAR(50) NOT NULL COMMENT 'Name of actions',
+						  `__tblActions.Actions__` VARCHAR(1024) NOT NULL COMMENT 'Actions of 0 and 1 in order from left to right is a privilege or restriction based on the module',
+						  `__tblActions.Comment__` VARCHAR(150) NULL COMMENT 'A comment that the operator can edit using the user interface, eg \"Allow generate Add, Edit, Delete in Accounts Payable\"',
+						  `__tblActions.CreatedDate__` DATE NOT NULL COMMENT 'Record creation date',
+						  `__tblActions.CreatedTime__` TIME NOT NULL COMMENT 'Record creation time',
+						  `__tblActions.SystemRecord__` SMALLINT NOT NULL COMMENT '1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1',
+						  `__tblActions.ReadOnlyRecord__` SMALLINT NOT NULL COMMENT '1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1',
+						  `__tblActions.UpdateControl__` VARCHAR(40) NULL COMMENT 'Control GUID changes, to avoid overwriting values ​​of an entity',
+						  PRIMARY KEY (`__tblActions.IdAction__`),
+						  UNIQUE INDEX `UNIQUE_IdAction___tblActions__` (`__tblActions.IdAction__` ASC),
+						  INDEX `fk_IdModule___tblActions___idx` (`__tblActions.IdModule__` ASC),
+						  CONSTRAINT `fk_IdModule__tblActions__`
+						  FOREIGN KEY (`__tblActions.IdModule__`)
+						  REFERENCES `__tblModules__` (`__tblModules.IdModule__`)
+						  ON DELETE CASCADE
+						  ON UPDATE CASCADE)
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Stores the actions that can be done on a module';
+
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblActions.IdAction__" Type="VARCHAR" Length="40" Comment="GUID key for the entity" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.IdModule__" Type="VARCHAR" Length="40" Comment="GUID that indicates which actions belong module" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.Name__" Type="VARCHAR" Length="50" Comment="Name of actions" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.Actions__" Type="VARCHAR" Length="1024" Comment="Actions of 0 and 1 in order from left to right is a privilege or restriction based on the module" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.Comment__" Type="VARCHAR" Length="150" Comment="A comment that the operator can edit using the user interface, eg Allow generate Add, Edit, Delete in Accounts Payable" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.CreatedDate__" Type="DATE" Length="0" Comment="Record creation date" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.CreatedTime__" Type="TIME" Length="0" Comment="Record creation time" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.SystemRecord__" Type="SMALLINT" Length="0" Comment="1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.ReadOnlyRecord__" Type="SMALLINT" Length="0" Comment="1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblActions.UpdateControl__" Type="VARCHAR" Length="40" Comment="Control GUID changes, to avoid overwriting values ​​of an entity" NotNull="keep" Alter="true" Add="true"/>
+  
+        </CheckFields>
+
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblActions__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+            </Data>
+         
+        </CheckData>
+            
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblActions__</Map>
+            <Map>__tblActions.IdAction__</Map>
+            <Map>__tblActions.IdModule__</Map>
+            <Map>__tblModules__</Map>
+            <Map>__tblModules.IdModule__</Map>
+            <Map>__tblActions.Name__</Map>
+            <Map>__tblActions.Actions__</Map>
+            <Map>__tblActions.Comment__</Map>
+            <Map>__tblActions.CreatedDate__</Map>
+            <Map>__tblActions.CreatedTime__</Map>
+            <Map>__tblActions.SystemRecord__</Map>
+            <Map>__tblActions.ReadOnlyRecord__</Map>
+            <Map>__tblActions.UpdateControl__</Map>
+        
+        </MapsNames>
+
+    </Table>
+
+    <Table Name="__tblPrivileges__" Description="Stores the privileges of a given group of a system module, after verification of the operator restrictions on the module is verified in table privileges you may have about a particular module\n\n0 = Do not allow, restrict\n1 = Allow, without restriction\n\nThe system must first verify your restriction before the privileges of the group to which the operator, in other words the restrictions take precedence over privileges" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+           
+				CREATE TABLE `__tblPrivileges__` (
+						  `__tblPrivileges.IdAction__` VARCHAR(40) NOT NULL COMMENT 'Identifies actions',
+						  `__tblPrivileges.IdGroup__` VARCHAR(40) NOT NULL COMMENT 'Identifies the group that is allowed to perform the actions',
+						  `__tblPrivileges.CreatedDate__` DATE NOT NULL COMMENT 'Record creation date',
+						  `__tblPrivileges.CreatedTime__` TIME NOT NULL COMMENT 'Record creation time',
+						  PRIMARY KEY (`__tblPrivileges.IdAction__`, `__tblPrivileges.IdGroup__`),
+						  INDEX `fk_IdAction___tblPrivileges___idx` (`__tblPrivileges.IdAction__` ASC),
+						  INDEX `fk_IdGroup___tblPrivileges___idx` (`__tblPrivileges.IdGroup__` ASC),
+						  CONSTRAINT `fk_IdAction___tblPrivileges__`
+						    FOREIGN KEY (`__tblPrivileges.IdAction__`)
+						    REFERENCES `__tblActions__` (`__tblActions.IdAction__`)
+						    ON DELETE CASCADE
+						    ON UPDATE CASCADE,
+						  CONSTRAINT `fk_IdGroup___tblPrivileges__`
+						    FOREIGN KEY (`__tblPrivileges.IdGroup__`)
+						    REFERENCES `__tblGroups__` (`__tblGroups.IdGroup__`)
+						    ON DELETE CASCADE
+						    ON UPDATE CASCADE)
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Stores the privileges of a given group of a system module, after verification of the operator restrictions on the module is verified in table privileges you may have about a particular module\n\n0 = Do not allow, restrict\n1 = Allow, without restriction\n\nThe system must first verify your restriction before the privileges of the group to which the operator, in other words the restrictions take precedence over privileges';
+
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblPrivileges.IdAction__" Type="VARCHAR" Length="40" Comment="Identifies actions" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblPrivileges.IdGroup__" Type="VARCHAR" Length="40" Comment="Identifies the group that is allowed to perform the actions" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblPrivileges.CreatedDate__" Type="DATE" Length="0" Comment="Record creation date" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblPrivileges.CreatedTime__" Type="TIME" Length="0" Comment="Record creation time" NotNull="keep" Alter="true" Add="true"/>
+  
+        </CheckFields>
+
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblPrivileges__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+            </Data>
+         
+        </CheckData>
+            
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblActions__</Map>
+            <Map>__tblActions.IdAction__</Map>
+            <Map>__tblGroups__</Map>
+            <Map>__tblGroups.IdGroup__</Map>
+            <Map>__tblPrivileges__</Map>
+            <Map>__tblPrivileges.IdAction__</Map>
+            <Map>__tblPrivileges.IdGroup__</Map>
+            <Map>__tblPrivileges.CreatedDate__</Map>
+            <Map>__tblPrivileges.CreatedTime__</Map>
+        
+        </MapsNames>
+
+    </Table>
+
+    <Table Name="__tblRestrictions__" Description="Stores the restrictions of a determiner operator on a particular module of the system, the system checks in table if it finds is associated actions and operator module\n\n0 = Enable, without restraint\n1 = Do not allow, restrict\n\nThe system must first verify your restriction before the privileges of the group to which the operator, in other words the restrictions take precedence over privileges" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+           
+				CREATE TABLE `__tblRestrictions__` (
+						  `__tblRestrictions.IdAction__` VARCHAR(40) NOT NULL COMMENT 'Identifies actions',
+						  `__tblRestrictions.IdOperator__` VARCHAR(40) NOT NULL COMMENT 'Identifies the operator that is restricted to perform the actions',
+						  `__tblRestrictions.CreatedDate__` DATE NOT NULL COMMENT 'Record creation date',
+						  `__tblRestrictions.CreatedTime__` TIME NOT NULL COMMENT 'Record creation time',
+						  PRIMARY KEY (`__tblRestrictions.IdAction__`, `__tblRestrictions.IdOperator__`),
+						  INDEX `fk_IdAction___tblRestrictions___idx` (`__tblRestrictions.IdAction__` ASC),
+						  INDEX `fk_IdOperator___tblRestrictions___idx` (`__tblRestrictions.IdOperator__` ASC),
+						  CONSTRAINT `fk_IdAction___tblRestrictions__`
+						    FOREIGN KEY (`__tblRestrictions.IdAction__`)
+						    REFERENCES `__tblActions__` (`__tblActions.IdAction__`)
+						    ON DELETE CASCADE
+						    ON UPDATE CASCADE,
+						  CONSTRAINT `fk_IdOperator___tblRestrictions__`
+						    FOREIGN KEY (`__tblRestrictions.IdOperator__`)
+						    REFERENCES `__tblOperators__` (`__tblOperators.IdOperator__`)
+						    ON DELETE CASCADE
+						    ON UPDATE CASCADE)
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Stores the restrictions of a determiner operator on a particular module of the system, the system checks in table if it finds is associated actions and operator module\n\n0 = Enable, without restraint\n1 = Do not allow, restrict\n\nThe system must first verify your restriction before the privileges of the group to which the operator, in other words the restrictions take precedence over privileges';
+
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblRestrictions.IdAction__" Type="VARCHAR" Length="40" Comment="Identifies actions" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblRestrictions.IdOperator__" Type="VARCHAR" Length="40" Comment="Identifies the operator that is restricted to perform the actions" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblRestrictions.CreatedDate__" Type="DATE" Length="0" Comment="Record creation date" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblRestrictions.CreatedTime__" Type="TIME" Length="0" Comment="Record creation time" NotNull="keep" Alter="true" Add="true"/>
+  
+        </CheckFields>
+
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblRestrictions__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+            </Data>
+         
+        </CheckData>
+            
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblActions__</Map>
+            <Map>__tblActions.IdAction__</Map>
+            <Map>__tblOperators__</Map>
+            <Map>__tblOperators.IdOperator__</Map>
+            <Map>__tblRestrictions__</Map>
+            <Map>__tblRestrictions.IdAction__</Map>
+            <Map>__tblRestrictions.IdOperator__</Map>
+            <Map>__tblRestrictions.CreatedDate__</Map>
+            <Map>__tblRestrictions.CreatedTime__</Map>
+        
+        </MapsNames>
+
+    </Table>
+
+    <Table Name="__tblModulesConfig__" Description="Store general settings module" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+           
+				CREATE TABLE `__tblModulesConfig__` (
+						  `__tblModulesConfig.IdModule__` VARCHAR(40) NOT NULL COMMENT 'GUID belonging to module',
+						  `__tblModulesConfig.IdConfig__` VARCHAR(40) NOT NULL COMMENT 'IDConfig example \"Sequence\", \"RIF1\"',
+						  `__tblModulesConfig.Value__` VARCHAR(2048) NULL COMMENT 'Value represented as a string',
+						  `__tblModulesConfig.ValueBLOB__` BLOB NULL COMMENT 'Value represented as a raw binary value',
+						  PRIMARY KEY (`__tblModulesConfig.IdModule__`, `__tblModulesConfig.IdConfig__`),
+						  CONSTRAINT `fk_IdModule___tblModulesConfig__`
+						    FOREIGN KEY (`__tblModulesConfig.IdModule__`)
+						    REFERENCES `__tblModules__` (`__tblModules.IdModule__`)
+						    ON DELETE CASCADE
+						    ON UPDATE CASCADE)
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Store general settings module';
+
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblModulesConfig.IdModule__" Type="VARCHAR" Length="40" Comment="GUID belonging to module" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModulesConfig.IdConfig__" Type="VARCHAR" Length="40" Comment="IDConfig example Sequence, RIF1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModulesConfig.Value__" Type="VARCHAR" Length="2048" Comment="Value represented as a string" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblModulesConfig.ValueBLOB__" Type="BLOB" Length="0" Comment="Value represented as a raw binary value" NotNull="keep" Alter="true" Add="true"/>
+  
+        </CheckFields>
+
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblModulesConfig__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+            </Data>
+         
+        </CheckData>
+            
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblModules__</Map>
+            <Map>__tblModules.IdModule__</Map>
+            <Map>__tblModulesConfig__</Map>
+            <Map>__tblModulesConfig.IdModule__</Map>
+            <Map>__tblModulesConfig.IdConfig__</Map>
+            <Map>__tblModulesConfig.Value__</Map>
+            <Map>__tblModulesConfig.ValueBLOB__</Map>
+        
+        </MapsNames>
+
+    </Table>
+    
+    <Table Name="__tblOperatorsConfig__" Description="Store general configurations operator" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+           
+				CREATE TABLE `__tblOperatorsConfig__` (
+						  `__tblOperatorsConfig.IdOperator__` VARCHAR(40) NOT NULL COMMENT 'GUID belonging to operator',
+						  `__tblOperatorsConfig.IdConfig__` VARCHAR(40) NOT NULL COMMENT 'IDConfig example \"Sequence\", \"RIF1\"',
+						  `__tblOperatorsConfig.Value__` VARCHAR(2048) NULL COMMENT 'Value represented as a string',
+						  `__tblOperatorsConfig.ValueBLOB__` BLOB NULL COMMENT 'Value represented as a raw binary value',
+						  PRIMARY KEY (`__tblOperatorsConfig.IdOperator__`, `__tblOperatorsConfig.IdConfig__`),
+						  CONSTRAINT `fk_IdOperator___tblOperatorsConfig__`
+						    FOREIGN KEY (`__tblOperatorsConfig.IdOperator__`)
+						    REFERENCES `__tblOperators__` (`__tblOperators.IdOperator__`)
+						    ON DELETE CASCADE
+						    ON UPDATE CASCADE)
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Store general configurations operator';
+
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblOperatorsConfig.IdOperator__" Type="VARCHAR" Length="40" Comment="GUID belonging to operator" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperatorsConfig.IdConfig__" Type="VARCHAR" Length="40" Comment="IDConfig example Sequence, RIF1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperatorsConfig.Value__" Type="VARCHAR" Length="2048" Comment="Value represented as a string" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblOperatorsConfig.ValueBLOB__" Type="BLOB" Length="0" Comment="Value represented as a raw binary value" NotNull="keep" Alter="true" Add="true"/>
+  
+        </CheckFields>
+
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblOperatorsConfig__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+            </Data>
+         
+        </CheckData>
+            
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblOperators__</Map>
+            <Map>__tblOperators.IdOperator__</Map>
+            <Map>__tblOperatorsConfig__</Map>
+            <Map>__tblOperatorsConfig.IdOperator__</Map>
+            <Map>__tblOperatorsConfig.IdConfig__</Map>
+            <Map>__tblOperatorsConfig.Value__</Map>
+            <Map>__tblOperatorsConfig.ValueBLOB__</Map>
+        
+        </MapsNames>
+
+    </Table>
+
+    <Table Name="__tblGroupsConfig__" Description="Store general configurations group" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+        <CreationDefinitions>
+        
+           <Command><![CDATA[
+           
+				CREATE TABLE `__tblGroupsConfig__` (
+						  `__tblGroupsConfig.IdGroup__` VARCHAR(40) NOT NULL COMMENT 'GUID belonging to group',
+						  `__tblGroupsConfig.IdConfig__` VARCHAR(40) NOT NULL COMMENT 'IDConfig example \"Sequence\", \"RIF1\"',
+						  `__tblGroupsConfig.Value__` VARCHAR(2048) NULL COMMENT 'Value represented as a string',
+						  `__tblGroupsConfig.ValueBLOB__` BLOB NULL COMMENT 'Value represented as a raw binary value',
+						  PRIMARY KEY (`__tblGroupsConfig.IdGroup__`, `__tblGroupsConfig.IdConfig__`),
+						  CONSTRAINT `fk_IdGroup___tblGroupsConfig__`
+						    FOREIGN KEY (`__tblGroupsConfig.IdConfig__`)
+						    REFERENCES `__tblGroups__` (`__tblGroups.IdGroup__`)
+						    ON DELETE CASCADE
+						    ON UPDATE CASCADE)
+				ENGINE = InnoDB
+				DEFAULT CHARACTER SET = utf8
+				COLLATE = utf8_unicode_ci
+				COMMENT = 'Store general configurations group';
+
+           ]]></Command>
+        
+        </CreationDefinitions> 
+
+        <!-- table found but field not found add the field to end of table and default value NULL --> 
+        <AddFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` ADD COLUMN `@@field_name@@` @@field_type@@ NULL;
+
+        ]]></AddFieldDefinition> 
+
+        <!-- table found but field type is no correct --> 
+        <AlterFieldDefinition><![CDATA[
+
+            ALTER TABLE `@@table_name@@` CHANGE COLUMN `@@field_name@@` `@@field_name@@` @@field_type@@ @@field_not_null@@ COMMENT '@@field_comment@@';
+
+        ]]></AlterFieldDefinition>
+
+        <CheckFields>
+          
+            <!-- Mapped fields names -->
+            <!-- Check the next fields exists in table if not exists must be create in table -->  
+            <!-- MatchCase attribute values = "any" or "exact" -->
+            <Field MatchCase="any" Name="__tblGroupsConfig.IdGroup__" Type="VARCHAR" Length="40" Comment="GUID belonging to group" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblGroupsConfig.IdConfig__" Type="VARCHAR" Length="40" Comment="IDConfig example Sequence, RIF1" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblGroupsConfig.Value__" Type="VARCHAR" Length="2048" Comment="Value represented as a string" NotNull="keep" Alter="true" Add="true"/>
+            <Field MatchCase="any" Name="__tblGroupsConfig.ValueBLOB__" Type="BLOB" Length="0" Comment="Value represented as a raw binary value" NotNull="keep" Alter="true" Add="true"/>
+  
+        </CheckFields>
+
+        <!-- Init the data values in table after first time created table or find the key exits --> 
+        <CheckData>
+     
+            <!-- Event attribute values = "table_created" or "table_exists" -->
+            <!-- Type attribute values = "none" or "where" or "full" -->
+            <!-- Action attribute values = "insert" or "update" -->
+            <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
+
+            <Data ID="Data01" Event="table_created" Active="true">
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblGroupsConfig__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+            </Data>
+         
+        </CheckData>
+            
+        <!-- Map the names for translate to real database names -->
+        <MapsNames>
+        
+            <Map>__tblAuditDB__</Map>
+            <Map>__tblAuditSystem__</Map>
+            <Map>__tblGroups__</Map>
+            <Map>__tblGroups.IdGroup__</Map>
+            <Map>__tblGroupsConfig__</Map>
+            <Map>__tblGroupsConfig.IdGroup__</Map>
+            <Map>__tblGroupsConfig.IdConfig__</Map>
+            <Map>__tblGroupsConfig.Value__</Map>
+            <Map>__tblGroupsConfig.ValueBLOB__</Map>
+        
+        </MapsNames>
+
+    </Table>
+
+  </Database>
+
+</Config>

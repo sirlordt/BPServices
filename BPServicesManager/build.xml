@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BPServicesManager" default="00_Build-All" basedir=".">
+ 
+    <target name="00_Build-All" depends="01_Init, 02_Create_Bin_Folders_And_Files_ServicesDaemon, 03_Compile-BPCommonLibs-Source, 04_Create-BPCommonLibs.jar, 05_Compile-BPServicesManager-Source, 06_Create-BPServicesManager.jar" description="Compile ALL and package ALL">
+        <echo message="Compile ALL and create ALL .jar file" />
+    </target>
+	
+    <target name="01_Init">
+        <tstamp />
+    
+        <property name="distro-bin" value="distro-bin/" />
+        <property name="bin" value="bin/" />
+        
+        <echo message="Remember to adjust the path to the root of the project ServicesDaemon to property ${ServicesDaemon-Workspace}" />
+        <property name="ServicesDaemon-Workspace" value="/home/sirlordt/Documentos/git/servicesdaemon/ServicesDaemon/" />
+    	
+        <property name="distro-bin-ServicesDaemon" value="${ServicesDaemon-Workspace}/${distro-bin}/ServicesDaemon/" />
+        
+        <property name="bin-ServicesDaemon" value="${ServicesDaemon-Workspace}/${bin}/ServicesDaemon/" />
+    	
+        <property name="src-BPCommonClasses" value="BPCommonLibs/BPCommonClasses/" />
+        <property name="bin-BPCommonClasses" value="bin/BPCommonClasses/" />
+
+        <property name="BPCommonClassesName" value="BPCommonClasses" />
+
+    	<property name="src-BPBackendServicesManager" value="BPCommonLibs/BPBackendServicesManager/" />
+        <property name="bin-BPBackendServicesManager" value="bin/BPBackendServicesManager/" />
+
+        <property name="BPBackendServicesManagerName" value="BPBackendServicesManager" />
+
+    	<property name="src-DBActions" value="BPCommonLibs/DBActions/" />
+        <property name="bin-DBActions" value="bin/DBActions/" />
+
+        <property name="DBActionsName" value="DBActions" />
+
+    	<property name="src-DBDefinitions" value="BPCommonLibs/DBDefinitions/" />
+        <property name="bin-DBDefinitions" value="bin/DBDefinitions/" />
+    	
+        <property name="DBDefinitionsName" value="DBDefinitions" />
+
+        <property name="BPCommonLibsName" value="BPCommonLibs" />
+        <property name="BPCommonLibsVersion" value="0.0.0.1" />
+
+    	<property name="src-BPServicesManager" value="BPServicesManager/BPServicesManager/" />
+        <property name="bin-BPServicesManager" value="bin/BPServicesManager/" />
+
+        <property name="BPServicesManagerName" value="BPServicesManager" />
+        <property name="BPServicesManagerVersion" value="0.0.0.1" />
+
+        <property name="EnableDebug" value="true" />
+    	
+        <path id="class_path_ServicesDaemon_Libs_jars">
+                
+           <fileset dir="${distro-bin-ServicesDaemon}/Libs">
+               <include name="**/*.jar" />
+           </fileset>
+                
+        </path> 
+
+        <path id="class_path_BPServicesManager_Libs_jars">
+                
+           <fileset dir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Libs">
+               <include name="**/*.jar" />
+           </fileset>
+                
+        </path> 
+
+    </target>
+	
+    <target name="02_Create_Bin_Folders_And_Files_ServicesDaemon" depends="01_Init" description="Generate all struct need for bin folder">
+        
+        <mkdir dir="${bin-ServicesDaemon}/Managers/10_BPServicesManager"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/BPServices"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Langs"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Libs"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Logs"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/ResponsesFormats"/>
+        <mkdir dir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Temp"/>
+        <copy file="${src-BPServicesManager}/BPServicesManager.conf" todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager" overwrite="true"/>
+        <copy file="${src-BPServicesManager}/Langs/BPServicesManager.init.lang.xml" todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Langs" overwrite="true"/>
+
+        <copy todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager" overwrite="true">
+            <fileset dir="${src-BPServicesManager}/" includes="*.xml"/>
+        </copy>
+  
+    	<!--
+        <copy file="${src-BPServicesManager}/DBActions.AuroraDB.xml" todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager" overwrite="true"/>
+        <copy file="${src-BPServicesManager}/DBActions.DB10.xml" todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager" overwrite="true"/>
+        <copy file="${src-BPServicesManager}/DBDefinitions.AuroraDB.xml" todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager" overwrite="true"/>
+        <copy file="${src-BPServicesManager}/DBDefinitions.DB10.xml" todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager" overwrite="true"/>
+        <copy file="${src-BPServicesManager}/DBMaps.AuroraDB.xml" todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager" overwrite="true"/>
+        <copy file="${src-BPServicesManager}/DBMaps.DB10.xml" todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager" overwrite="true"/>
+    	-->
+    	
+        <delete file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Libs/readme.txt"/>
+        <delete file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/ResponsesFormats/readme.txt"/>
+        <delete file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Temp/readme.txt"/>
+        
+        <touch file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Libs/readme.txt"/>
+        <touch file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/ResponsesFormats/readme.txt"/>
+        <touch file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Temp/readme.txt"/>
+        
+        <echo file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Libs/readme.txt" append="true" message="Folder for support library (*.jar) files need for run the manager${line.separator}"/>
+        <echo file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/ResponsesFormats/readme.txt" append="true" message="Here you can put all the (*.jar) files that implement the CAbstractResponseFormat class to extend formats reponses embedded in system.${line.separator}${line.separator}The directory must exist.${line.separator}"/>
+        <echo file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Temp/readme.txt" append="true" message="Temporal storage for multiple purposes${line.separator}"/>
+    	
+        <copy todir="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Libs" overwrite="true">
+        	<fileset dir="${src-BPServicesManager}/Libs/" includes="**/*.jar"/>
+        </copy>	
+    	
+    </target>   
+	
+    <target name="03_Compile-BPCommonLibs-Source" depends="01_Init" description="Only compile BPCommonLibs source folder">
+        <mkdir dir="${bin}"/>
+        <javac includeantruntime="false" destdir="${bin}" debug="${EnableDebug}">
+            <src path="${src-BPCommonClasses}" />
+            <src path="${src-BPBackendServicesManager}" />
+            <src path="${src-DBActions}" />
+            <src path="${src-DBDefinitions}" />
+            <classpath refid="class_path_ServicesDaemon_Libs_jars"/>
+            <classpath refid="class_path_BPServicesManager_Libs_jars"/>
+            <!-- compilerarg value = "-XDignore.symbol.file " --> 
+        </javac>    
+    </target>
+	
+    <target name="04_Create-BPCommonLibs.jar" depends="01_Init" description="Generate BPCommonLibs.jar file for [ServicesDaemon-Workspace]/bin/ServicesDaemon/Managers/10_BPServicesManager/Libs folder">
+        
+    	<delete file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Libs/${BPCommonLibsName}.jar"/>
+    	
+        <jar jarfile="${bin-ServicesDaemon}/Managers/10_BPServicesManager/Libs/${BPCommonLibsName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${BPCommonClassesName}/*.class"/>
+            <fileset dir="${bin}" includes="${BPBackendServicesManagerName}/*.class"/>
+            <fileset dir="${bin}" includes="${DBActionsName}/*.class"/>
+            <fileset dir="${bin}" includes="${DBDefinitionsName}/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${BPCommonLibsName}" />
+                <attribute name="Specification-Version" value="${BPCommonLibsVersion}" />
+            </manifest>
+        </jar>
+        
+    </target>
+	
+    <target name="05_Compile-BPServicesManager-Source" depends="01_Init" description="Only compile BPServicesManager source folder">
+        <mkdir dir="${bin}"/>
+        <javac includeantruntime="false" destdir="${bin}" debug="${EnableDebug}">
+            <src path="${src-BPServicesManager}" />
+            <classpath refid="class_path_ServicesDaemon_Libs_jars"/>
+            <classpath refid="class_path_BPServicesManager_Libs_jars"/>
+            <!-- compilerarg value = "-XDignore.symbol.file " --> 
+        </javac>    
+    </target>
+
+    <target name="06_Create-BPServicesManager.jar" depends="01_Init" description="Generate BPServicesManager.jar file for [ServicesDaemon-Workspace]/bin/ServicesDaemon/Managers/10_BPServicesManager folder">
+        
+        <delete file="${bin-ServicesDaemon}/Managers/10_BPServicesManager/${BPServicesManagerName}.jar"/>
+    	
+        <jar jarfile="${bin-ServicesDaemon}/Managers/10_BPServicesManager/${BPServicesManagerName}.jar" index="no" compress="yes" update="true">
+            <fileset dir="${bin}" includes="${BPServicesManagerName}/*.class"/>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Specification-Title" value="${BPServicesManagerName}" />
+                <attribute name="Specification-Version" value="${BPServicesManagerVersion}" />
+            </manifest>
+            <service type="AbstractServicesManager.CAbstractServicesManager">
+                <provider classname="BPServicesManager.CServicesManager"/>
+            </service>  
+        </jar>
+        
+    </target>
+	
+</project>	

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Config>
+
+<!-- 
+
+  Phase 1 SQL from Action DB 
+  1) "Select __tblOperators.IdOperator__ From __tblOperators__ Where __tblOperators.Name__ = @@ValueName@@ And __tblOperators.Password__ = @@ValuePassword@@" 
+  Phase 2 Map Fields Names And Tables Names to real DB names 
+  2) "Select IdOperator From tblOperators Where Name = @@ValueName@@ And Password = @@ValuePassword@@"
+  Phase 3 Convert input param values to correct format to ServiceDaemon /DBServices (Layer 1)  
+  3) "Select IdOperator From tblOperators Where Name = [paramvalue]@@ValueName@@[/paramvalue] And Password = [paramvalue]@@ValuePassword@@[/paramvalue]" 
+   
+-->
+
+<ActionDB ID="0x1000" Description="Check user name and password">
+  
+  <Command>Select __tblOperators.IdOperator__ From __tblOperators__ Where __tblOperators.Name__ = @@ValueName@@ And __tblOperators.Password__ = @@ValuePassword@@</Command>
+  <Map>__tblOperators.IdOperator__</Map>
+  <Map>__tblOperators__</Map>
+  <Map>__tblOperators.Name__</Map>
+  <Map>__tblOperators.Password__</Map>
+  <InputParam datatype="varchar">@@ValueName@@</InputParam>
+  <InputParam datatype="varchar">@@ValuePassword@@</InputParam>
+  
+</ActionDB>
+
+</Config>

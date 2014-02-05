@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+  <Database Name="DB10" Description="Main database" DBMS_Name="mysql" DBMS_Version="5.1" Create_Definition="CREATE DATABASE ProjectBaseDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;">
+ 
+    <Table Name="tblOperators" Description="Store all operators (Users) system" Create="true" Check_Fields="true" Add_Fields="true" Alter_Fields="true" Check_Data="true">
+
+       <CreateDefinition><![CDATA[
+
+        CREATE TABLE `ProjectBaseDB`.`tblOperators` (
+                  `IdOperator` VARCHAR(40) NOT NULL COMMENT 'GUID key for the entity',
+                  `IdGroup` VARCHAR(40) NOT NULL COMMENT 'GUID that indicates to the operator group belongs',
+                  `Active` SMALLINT NOT NULL COMMENT '1 = Active, 0 = Inactive. If the operator is inactive can not enter the system regardless of their password or privileges',
+                  `ShowInList` SMALLINT NOT NULL COMMENT '1 = Show, 0 = No show. Indicates if the user name should appear in the dropdown list of the login box when the operator turns off automaticamete is hidden from the list',
+                  `Name` VARCHAR(50) NOT NULL COMMENT 'Name (login). Must be unique you can apply a restriction (Unique)',
+                  `Password` VARCHAR(150) NOT NULL COMMENT 'Secret password SHA512',
+                  `Comment` VARCHAR(150) NULL COMMENT 'A comment that the operator can edit using the user interface',
+                  `CreatedDate` DATE NOT NULL COMMENT 'Record creation date',
+                  `CreatedTime` TIME NOT NULL COMMENT 'Record creation time',
+                  `SystemRecord` SMALLINT NOT NULL DEFAULT 0 COMMENT '1 = System, 0 = Regular indicates whether the system registry is preventing it from being deleted if it is equal to 1',
+                  `ReadOnlyRecord` SMALLINT NOT NULL DEFAULT 0 COMMENT '1 = Read only, 0 = Regular Indicates whether the record is read-only from being changed if it is equal to 1',
+                  `UpdateControl` VARCHAR(40) NULL COMMENT 'Control GUID changes, to avoid overwriting values ​​of an entity',
+                  PRIMARY KEY (`IdOperator`),
+                  UNIQUE INDEX `IdOperator_UNIQUE` (`IdOperator` ASC),
+                  UNIQUE INDEX `Name_UNIQUE` (`Name` ASC),
+                  INDEX `fk_IdGroup_1_idx` (`IdGroup` ASC),
+                  CONSTRAINT `fk_IdGroup_1`
+                  FOREIGN KEY (`IdGroup`)
+                  REFERENCES `ProjectBaseDB`.`tblGroups` (`IdGroup`)
+                  ON DELETE CASCADE
+                  ON UPDATE CASCADE)
+                ENGINE = InnoDB
+                DEFAULT CHARACTER SET = utf8
+                COLLATE = utf8_unicode_ci
+                COMMENT = 'Store all operators (Users) system';
+          
+       ]]></CreateDefinition> 
+
+       <!-- table found but field not found add the field to end of table and default value NULL --> 
+       <AlterFieldDefinition><![CDATA[
+
+              ALTER TABLE `ProjectBaseDB`.`##tablename##` ADD COLUMN `##fieldname##` ##fieldtype## NULL;
+
+       ]]></AlterFieldDefinition> 
+
+       <CheckFields>
+          
+          <!-- Check the next fields exists in table if not exists must be create in table -->  
+          <!-- MatchCase attribute values = "any" or "exact" -->
+          <Field MatchCase="any" Name="IdOperator" Type="VARCHAR" Length="50" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="IdGroup" Type="VARCHAR" Length="50" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="Active" Type="SMALLINT" Length="0" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="ShowInList" Type="SMALLINT" Length="0" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="Name" Type="VARCHAR" Length="50" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="Comment" Type="VARCHAR" Length="150" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="CreatedDate" Type="DATE" Length="0" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="CreatedTime" Type="TIME" Length="0" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="SystemRecord" Type="SMALLINT" Length="0" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="ReadOnlyRecord" Type="SMALLINT" Length="0" Comment="" NotNull="keep" Alter="true" Add="true"/>
+          <Field MatchCase="any" Name="UpdateControl" Type="VARCHAR" Length="40" Comment="" NotNull="keep" Alter="true" Add="true"/>
+ 
+       </CheckFields>
+
+       <!-- Init the data values in table after first time created table or find the key exits --> 
+       <CheckData>
+     
+          <!-- Type attribute values = "where" or "full" -->
+          <!-- Action attribute values = "insert" or "update" -->
+          <!-- Supported macros = ##tablename## -->
+          <Data Active="true">
+              <!-- Select * From tblOperators Where IdOperator = 'xxx-ccc' --> 
+              <Condition Type="where" Action="insert"><![CDATA[ IdOperator = 'xxx-ccc' ]]></Condition> 
+              <Command>Insert Into tblOperators() Values()</Command>
+          </Data> 
+          
+          <Data Active="true">
+              <!-- Select * From tblOperators Where IdOperator = 'uuu-iii' --> 
+              <Condition Type="where" Action="insert"><![CDATA[ IdOperator = 'uuu-iii' ]]></Condition> 
+              <Command>Insert Into tblOperators() Values()</Command>
+          </Data> 
+
+          <Data Active="true">
+              <Condition Type="full" Action="insert"><![CDATA[ Select * From ##tablename## A Inner Join tblGroups B On B.IdGroup = A.IdGroup Where A.IdOperator = 'xxx-yyy' And B.SystemAdmin = 1 ]]></Condition> 
+              <Command>Insert Into tblOperators() Values()</Command>
+          </Data> 
+
+          <Data Active="true">
+              <Condition Type="full" Action="insert"><![CDATA[ Select * From tblOperators A Inner Join tblGroups B On B.IdGroup = A.IdGroup Where A.IdOperator = '111-222' And B.SystemAdmin = 1 ]]></Condition> 
+              <Command>Insert Into tblOperators() Values()</Command>
+          </Data>
+
+          <Data Active="true">
+              <Condition Type="full" Action="update"><![CDATA[ Select * From tblOperators A Inner Join tblGroups B On B.IdGroup = A.IdGroup Where A.IdOperator = '333-444' And B.SystemAdmin = 1 ]]></Condition> 
+              <Command>Update tblOperators Set Name='Administrator' Where IdOperator = '111-222'</Command>
+              <Command>Insert tblAuditDB(Operator,CreatedDate,CreatedTime,Table,ID,Action,Description) Values('BPProcess',CurrentDate(),CurrentTime(),'tblOperators',@@IdOperator@@,2,'Update operator name from @@Name@@ => Administrator' )</Command>
+          </Data>
+           
+       </CheckData>
+
+    </Table> 
+
+  </Database>
+
+</Config>

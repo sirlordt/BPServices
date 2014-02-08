@@ -38,7 +38,7 @@ public class CServicesManager extends CAbstractServicesManager {
 
 	public static CConfigServicesManager ConfigServicesManager = null;;
     
-	public static HashMap<String,CAbstractService> RegisteredBPServices = null;
+	public static HashMap<String,CAbstractService> RegisteredServices = null;
 
     protected CSecurityTokensManager SecurityTokensManager;
 	
@@ -48,7 +48,7 @@ public class CServicesManager extends CAbstractServicesManager {
     
     static {
     	
-    	RegisteredBPServices = new HashMap<String,CAbstractService>();
+    	RegisteredServices = new HashMap<String,CAbstractService>();
     	
     }
 	
@@ -205,7 +205,7 @@ public class CServicesManager extends CAbstractServicesManager {
     	
     	try {
     	
-    		CDBDefinitionsManager DBDefinitionsManager = new CDBDefinitionsManager( strRunningPath, ConfigServicesManager.ConfiguredRegisterServices, ConfigServicesManager.intSelfClientRequestTimeout, ConfigServicesManager.intSelfClientSocketTimeout );
+    		CDBDefinitionsManager DBDefinitionsManager = new CDBDefinitionsManager( strRunningPath, ConfigServicesManager.ConfiguredRegisterServices, ConfigServicesManager.intRequestTimeout, ConfigServicesManager.intSocketTimeout );
     		
     		DBDefinitionsManager.loadDBDefinitionsFromFile( DBConnectionConfig.strDBDefinitionsFilePath, Logger, Lang );
 
@@ -280,7 +280,7 @@ public class CServicesManager extends CAbstractServicesManager {
 			ServiceLoader<CBPAbstractService> sl = ServiceLoader.load( CBPAbstractService.class );
 			sl.reload();
 
-			RegisteredBPServices.clear();
+			RegisteredServices.clear();
 
 			Iterator<CBPAbstractService> it = sl.iterator();
 
@@ -292,7 +292,7 @@ public class CServicesManager extends CAbstractServicesManager {
 
 					if ( ServiceInstance.initializeService( ServicesDaemonConfig, ConfigServicesManager ) == true ) {
 
-						RegisteredBPServices.put( ServiceInstance.getServiceName().toLowerCase(), ServiceInstance );
+						RegisteredServices.put( ServiceInstance.getServiceName().toLowerCase(), ServiceInstance );
 
 						ConfigServicesManager.Logger.logMessage( "1", ConfigServicesManager.Lang.translate( "Registered service: [%s] description: [%s] version: [%s]", ServiceInstance.getServiceName().toLowerCase(), ServiceInstance.getServiceDescription(), ServiceInstance.getServiceVersion() ) );        
 
@@ -319,7 +319,7 @@ public class CServicesManager extends CAbstractServicesManager {
 
 			}
     		
-			ConfigServicesManager.Logger.logMessage( "1", ConfigServicesManager.Lang.translate( "Count of services registered: [%s]", Integer.toString( RegisteredBPServices.size() ) ) );        
+			ConfigServicesManager.Logger.logMessage( "1", ConfigServicesManager.Lang.translate( "Count of services registered: [%s]", Integer.toString( RegisteredServices.size() ) ) );        
 
 			bResult = true; //RegisteredBPServices.size() > 0;
 
@@ -371,7 +371,7 @@ public class CServicesManager extends CAbstractServicesManager {
     				if ( this.loadAndRegisterResponsesFormats( ServicesDaemonConfig ) == true ) {
 
     					//Load the business process services class
-    					ClassPathLoader.LoadClassFiles( ConfigServicesManager.strBPServicesDir, ConstantsCommonClasses._Lib_Ext, 2, BPServicesManagerLogger, BPServicesManagerLang  );
+    					ClassPathLoader.LoadClassFiles( ConfigServicesManager.strServicesDir, ConstantsCommonClasses._Lib_Ext, 2, BPServicesManagerLogger, BPServicesManagerLang  );
 
     					if ( this.loadAndRegisterBPServices( ServicesDaemonConfig ) == true ) {
 
@@ -382,7 +382,7 @@ public class CServicesManager extends CAbstractServicesManager {
     					}	
     					else {
 
-    						BPServicesManagerLogger.logError( "-1002", BPServicesManagerLang.translate( "No business process services found in path [%s]", ConfigServicesManager.strBPServicesDir ) );
+    						BPServicesManagerLogger.logError( "-1002", BPServicesManagerLang.translate( "No business process services found in path [%s]", ConfigServicesManager.strServicesDir ) );
 
     					}
 
@@ -418,10 +418,10 @@ public class CServicesManager extends CAbstractServicesManager {
     	
 		this.initiationOfAllDatabases( ConfigServicesManager.Logger, ConfigServicesManager.Lang ); //Init or Check DB Struct
     	
-		DataInfo.put( "RegisteredBPServices", RegisteredBPServices );
+		DataInfo.put( "RegisteredBPServices", RegisteredServices );
 		
     	//Do call PostInitializeService of registered services
-    	for ( Entry<String,CAbstractService> Entry : RegisteredBPServices.entrySet() ) {
+    	for ( Entry<String,CAbstractService> Entry : RegisteredServices.entrySet() ) {
     		
     		try {
     		
@@ -450,7 +450,7 @@ public class CServicesManager extends CAbstractServicesManager {
     	
     	if ( ConfigServicesManager.ConfiguredRegisterServices.size() > 0 ) {
     		
-			RegisterManagerTask = new CRegisterManagerTask( "RegisterManagerTask - " + this.strContextPath, ConfigServicesManager.Logger, ConfigServicesManager.Lang, ConfigServicesManager.ConfiguredRegisterServices, ServicesDaemonConfig.ConfiguredNetworkInterfaces, this.strContextPath, ConfigServicesManager.strTempDir, ConstantsCommonClasses._Register_Manager_Frecuency, ConfigServicesManager.intSelfClientRequestTimeout, ConfigServicesManager.intSelfClientSocketTimeout );
+			RegisterManagerTask = new CRegisterManagerTask( "RegisterManagerTask - " + this.strContextPath, ConfigServicesManager.Logger, ConfigServicesManager.Lang, ConfigServicesManager.ConfiguredRegisterServices, ServicesDaemonConfig.ConfiguredNetworkInterfaces, this.strContextPath, ConfigServicesManager.strTempDir, ConstantsCommonClasses._Register_Manager_Frecuency, ConfigServicesManager.intRequestTimeout, ConfigServicesManager.intSocketTimeout );
 			
 			RegisterManagerTask.start();
 			
@@ -463,9 +463,9 @@ public class CServicesManager extends CAbstractServicesManager {
     @Override
     public boolean endManager( CConfigServicesDaemon ServicesDaemonConfig ) {
     	
-    	if ( RegisteredBPServices != null ) {
+    	if ( RegisteredServices != null ) {
     	
-    		for ( Entry<String,CAbstractService> Entry : RegisteredBPServices.entrySet() ) {
+    		for ( Entry<String,CAbstractService> Entry : RegisteredServices.entrySet() ) {
 
     			try {
 
@@ -492,7 +492,7 @@ public class CServicesManager extends CAbstractServicesManager {
 
     		}
 
-    		RegisteredBPServices.clear();
+    		RegisteredServices.clear();
     	
     	}
     	
@@ -606,7 +606,7 @@ public class CServicesManager extends CAbstractServicesManager {
 
         	   if ( strServiceName != null && strServiceName.isEmpty() == false ) {
         	   
-        		   CAbstractService Service = RegisteredBPServices.get( strServiceName.toLowerCase() );
+        		   CAbstractService Service = RegisteredServices.get( strServiceName.toLowerCase() );
 
         		   if ( Service != null ) {
 
@@ -615,7 +615,7 @@ public class CServicesManager extends CAbstractServicesManager {
         				   if ( strRequestSecurityTokenID == null )
         					   strRequestSecurityTokenID = "";
         				   
-        				   Service.executeService( 1, Request, Response,  strRequestSecurityTokenID, RegisteredBPServices, ResponseFormat, strRequestResponseFormatVersion );
+        				   Service.executeService( 1, Request, Response,  strRequestSecurityTokenID, RegisteredServices, ResponseFormat, strRequestResponseFormatVersion );
 
         			   }
         			  else if ( strRequestSecurityTokenID != null && strRequestSecurityTokenID.equals( "" ) == false ) {
@@ -625,7 +625,7 @@ public class CServicesManager extends CAbstractServicesManager {
 
         				   if ( SecurityTokensManager.checkSecurityTokenID( strRequestSecurityTokenID, ConfigServicesManager.Logger, ConfigServicesManager.Lang ) == true ) {
 
-        					   int intResultCode = Service.executeService( 1, Request, Response,  strRequestSecurityTokenID, RegisteredBPServices, ResponseFormat, strRequestResponseFormatVersion );
+        					   int intResultCode = Service.executeService( 1, Request, Response,  strRequestSecurityTokenID, RegisteredServices, ResponseFormat, strRequestResponseFormatVersion );
         					   
         					   if ( intResultCode < 0 ) {
         						   

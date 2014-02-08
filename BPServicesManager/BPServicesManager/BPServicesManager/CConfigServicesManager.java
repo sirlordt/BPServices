@@ -34,11 +34,11 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 	public String strGlobalDateFormat;
 	public String strGlobalTimeFormat;
 
-	public int intSelfClientRequestTimeout;
-	public int intSelfClientSocketTimeout;
+	public int intRequestTimeout;
+	public int intSocketTimeout;
 	
 	public String strTempDir;
-	public String strBPServicesDir;
+	public String strServicesDir;
 	public String strResponsesFormatsDir;
 	public String strDefaultResponseFormat;
 	public String strDefaultResponseFormatVersion;
@@ -93,7 +93,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 		bFirstLevelConfigSectionsMustExists.add( true );
 		
 		strTempDir = strRunningPath + ConstantsCommonClasses._Temp_Dir; //"Temp/";
-		strBPServicesDir = strRunningPath + ConstantsServicesManager.BP_Services_Dir; //"DBServices/"; 
+		strServicesDir = strRunningPath + ConstantsServicesManager._Services_Dir; //"DBServices/"; 
 		strResponsesFormatsDir = strRunningPath + ConstantsCommonClasses._Responses_Formats_Dir; //"ResponsesFormats/";
 		
 		strGlobalDateTimeFormat = ConstantsCommonClasses._Global_Date_Time_Format;
@@ -122,8 +122,8 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 		strCSV_SeparatorSymbol = ConstantsCommonClasses._Separator_Symbol_CSV;
 		bCSV_ShowHeaders = ConstantsCommonClasses._Show_Headers_CSV;
 
-		intSelfClientRequestTimeout = ConstantsCommonClasses._Request_Timeout;
-		intSelfClientSocketTimeout = ConstantsCommonClasses._Socket_Timeout;
+		intRequestTimeout = ConstantsCommonClasses._Request_Timeout;
+		intSocketTimeout = ConstantsCommonClasses._Socket_Timeout;
 		
 		ConfiguredDBConnections = new ArrayList<CConfigServiceDBConnection>();
 		
@@ -273,17 +273,17 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 						}
 						else if ( NodeAttribute.getNodeName().equals( ConstantsConfigXMLTags._BPServices_Dir ) ) {
 
-							this.strBPServicesDir = NodeAttribute.getNodeValue();
+							this.strServicesDir = NodeAttribute.getNodeValue();
 		
-					        if ( this.strBPServicesDir != null && this.strBPServicesDir.isEmpty() == false && new File( this.strBPServicesDir ).isAbsolute() == false ) {
+					        if ( this.strServicesDir != null && this.strServicesDir.isEmpty() == false && new File( this.strServicesDir ).isAbsolute() == false ) {
 
-					        	this.strBPServicesDir = this.strRunningPath + this.strBPServicesDir;
+					        	this.strServicesDir = this.strRunningPath + this.strServicesDir;
 						        	
 						    }
 
-					        Logger.logMessage( "1", Lang.translate( "Runtime config value [%s] changed to: [%s]", "strDBServicesDir", this.strBPServicesDir ) );
+					        Logger.logMessage( "1", Lang.translate( "Runtime config value [%s] changed to: [%s]", "strDBServicesDir", this.strServicesDir ) );
 				        
-					        if ( Utilities.checkDir( this.strBPServicesDir, Logger, Lang ) == false ) {
+					        if ( Utilities.checkDir( this.strServicesDir, Logger, Lang ) == false ) {
 						    	
 					        	bResult = false;
 					        	
@@ -430,7 +430,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 					        	
 					        	if ( intTmpRequestTimeout >= ConstantsCommonClasses._Minimal_Request_Timeout && intTmpRequestTimeout <= ConstantsCommonClasses._Maximal_Request_Timeout ) {
 					        		
-					        		intSelfClientRequestTimeout = intTmpRequestTimeout;
+					        		intRequestTimeout = intTmpRequestTimeout;
 					        		
 					        	}
 					        	else {
@@ -443,7 +443,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 					        }
 					        else {
 					        	
-						        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute cannot empty string, using the default value [%s]", ConstantsCommonConfigXMLTags._Request_Timeout, Integer.toString( this.intSelfClientRequestTimeout ) ) );
+						        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute cannot empty string, using the default value [%s]", ConstantsCommonConfigXMLTags._Request_Timeout, Integer.toString( this.intRequestTimeout ) ) );
 					        	
 					        }
 							
@@ -456,7 +456,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 					        	
 					        	if ( intTmpSocketTimeout >= ConstantsCommonClasses._Minimal_Socket_Timeout && intTmpSocketTimeout <= ConstantsCommonClasses._Maximal_Socket_Timeout ) {
 					        		
-					        		intSelfClientSocketTimeout = intTmpSocketTimeout;
+					        		intSocketTimeout = intTmpSocketTimeout;
 					        		
 					        	}
 					        	else {
@@ -469,7 +469,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 					        }
 					        else {
 					        	
-						        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute cannot empty string, using the default value [%s]", ConstantsCommonConfigXMLTags._Socket_Timeout, Integer.toString( this.intSelfClientSocketTimeout ) ) );
+						        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute cannot empty string, using the default value [%s]", ConstantsCommonConfigXMLTags._Socket_Timeout, Integer.toString( this.intSocketTimeout ) ) );
 					        	
 					        }
 					        
@@ -480,9 +480,9 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 
 				        if ( strAttributesOrder[ intAttributesIndex ].equals( ConstantsConfigXMLTags._BPServices_Dir ) ) {
 		            		
-					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsConfigXMLTags._BPServices_Dir, this.strBPServicesDir ) );
+					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsConfigXMLTags._BPServices_Dir, this.strServicesDir ) );
 
-					        if ( Utilities.checkDir( this.strBPServicesDir, Logger, Lang ) == false ) {
+					        if ( Utilities.checkDir( this.strServicesDir, Logger, Lang ) == false ) {
 						    	
 					        	bResult = false;
 					        	
@@ -539,12 +539,12 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 		            	}
 		            	else if ( strAttributesOrder[ intAttributesIndex ].equals( ConstantsCommonConfigXMLTags._Request_Timeout ) ) {
 		            		
-					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsCommonConfigXMLTags._Request_Timeout, Integer.toString( this.intSelfClientRequestTimeout ) ) );
+					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsCommonConfigXMLTags._Request_Timeout, Integer.toString( this.intRequestTimeout ) ) );
 		            		
 		            	}
 		            	else if ( strAttributesOrder[ intAttributesIndex ].equals( ConstantsCommonConfigXMLTags._Socket_Timeout ) ) {
 		            		
-					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsCommonConfigXMLTags._Socket_Timeout, Integer.toString( this.intSelfClientSocketTimeout ) ) );
+					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsCommonConfigXMLTags._Socket_Timeout, Integer.toString( this.intSocketTimeout ) ) );
 		            		
 		            	}
 		            	

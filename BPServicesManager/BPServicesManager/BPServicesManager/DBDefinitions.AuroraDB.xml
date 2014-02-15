@@ -98,8 +98,8 @@
                 <!-- Init the data values in table ONLY after first time created table --> 
                 <!-- Always insert the data --> 
                 <Condition Type="none" Action="insert"/> 
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblAuditSystem__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','InitLayer',CurDate(),CurTime(),'Initialization of the Business Process Services Layer beginning',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblAuditSystem__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','InitLayer','@@cur_date@@','@@cur_time@@','Initialization of the Business Process Services Layer beginning','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data> 
 
             <Debug ID="D02">
@@ -107,7 +107,7 @@
                 <!-- Init the data values in table ONLY table exists --> 
                 <!-- Always insert the data --> 
                 <Condition Type="none" Action="insert"/> 
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','InitLayer',CurDate(),CurTime(),'Initialization of the Business Process Services Layer beginning',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','InitLayer','@@cur_date@@','@@cur_time@@','Initialization of the Business Process Services Layer beginning','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data> 
             </Debug>
 
@@ -198,7 +198,7 @@
                 <!-- Always insert the data --> 
                 <Debug ID="11"/>
                 <Condition Type="none" Action="insert"/> 
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblAuditDB__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblAuditDB__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data>
             
         </CheckData>
@@ -279,11 +279,11 @@
                 <!-- Always insert the data --> 
                 <Debug ID="12"/>
                 <Condition Type="none" Action="insert"/> 
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblSystemConfig__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblSystemConfig__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
                 <Command><![CDATA[ Insert Into __tblSystemConfig__ Values( '##SystemNameKey##','##SystemNameValue##',NULL ) ]]></Command>
                 <Command><![CDATA[ Insert Into __tblSystemConfig__ Values( '##SystemVersionKey##','##SystemVersionValue##',NULL ) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemNameKey##',1,'__tblSystemConfig.IdConfig__: ##SystemNameKey##; __tblSystemConfig.Value__: ##SystemNameValue##' ) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemVersionKey##',1,'__tblSystemConfig.IdConfig__: ##SystemVersionKey##; __tblSystemConfig.Value__: ##SystemVersionValue##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblSystemConfig__','##SystemNameKey##',1,'__tblSystemConfig.IdConfig__: ##SystemNameKey##; __tblSystemConfig.Value__: ##SystemNameValue##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblSystemConfig__','##SystemVersionKey##',1,'__tblSystemConfig.IdConfig__: ##SystemVersionKey##; __tblSystemConfig.Value__: ##SystemVersionValue##' ) ]]></Command>
             </Data>
             
             <Data ID="Data02" Event="table_exists" Active="true">
@@ -291,28 +291,28 @@
                 <Debug ID="13"/>
                 <Condition Type="where" Action="update"><![CDATA[ __tblSystemConfig.IdConfig__ = '##SystemNameKey##' And __tblSystemConfig.Value__ <> '##SystemNameValue##' ]]></Condition> 
                 <Command><![CDATA[ Update Into __tblSystemConfig__ Set __tblSystemConfig.Value__ = '##SystemNameValue##' Where __tblSystemConfig.IdConfig__ = '##SystemNameKey##'  ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemNameKey##',2,'__tblSystemConfig.Value__: @@__tblSystemConfig.Value__@@ -> ##SystemNameValue##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblSystemConfig__','##SystemNameKey##',2,'__tblSystemConfig.Value__: @@__tblSystemConfig.Value__@@ -> ##SystemNameValue##' ) ]]></Command>
             </Data>
             
             <Data ID="Data03" Event="table_exists" Active="true">
                 <!--Select * From tblSystemConfig From IdConfig = 'SystemName' And Value = 'Aurora' -->
                 <Condition Type="where" Action="insert"><![CDATA[ __tblSystemConfig.IdConfig__ = '##SystemNameKey##' And __tblSystemConfig.Value__ = '##SystemNameValue##' ]]></Condition> 
                 <Command><![CDATA[ Insert Into __tblSystemConfig__ Values( '##SystemNameKey##', '##SystemNameValue##', NULL ) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemNameKey##',1,'__tblSystemConfig.IdConfig__: ##SystemNameKey##; __tblSystemConfig.Value__: ##SystemNameValue##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblSystemConfig__','##SystemNameKey##',1,'__tblSystemConfig.IdConfig__: ##SystemNameKey##; __tblSystemConfig.Value__: ##SystemNameValue##' ) ]]></Command>
             </Data>
 
             <Data ID="Data04" Event="table_exists" Active="true">
                 <!--Select * From tblSystemConfig From IdConfig = 'SystemVersion' And Value <> '0.0.0.1' -->
                 <Condition Type="where" Action="update"><![CDATA[ __tblSystemConfig.IdConfig__ = '##SystemVersionKey##' And __tblSystemConfig.Value__ <> '##SystemVersionValue##' ]]></Condition> 
                 <Command><![CDATA[ Update Into __tblSystemConfig__ Set __tblSystemConfig.Value__ = '##SystemVersionValue##' Where __tblSystemConfig.IdConfig__ = '##SystemVersionKey##'  ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemVersionKey##',2,'__tblSystemConfig.Value__: @@__tblSystemConfig.Value__@@ -> ##SystemVersionValue##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblSystemConfig__','##SystemVersionKey##',2,'__tblSystemConfig.Value__: @@__tblSystemConfig.Value__@@ -> ##SystemVersionValue##' ) ]]></Command>
             </Data>
             
             <Data ID="Data05" Event="table_exists" Active="true">
                 <!--Select * From tblSystemConfig From IdConfig = 'SystemVersion' And Value = '0.0.0.1' -->
                 <Condition Type="where" Action="Insert"><![CDATA[ __tblSystemConfig.IdConfig__ = '##SystemVersionKey##' And __tblSystemConfig.Value__ = '##SystemVersionValue##' ]]></Condition> 
                 <Command><![CDATA[ Insert Into __tblSystemConfig__ Values( '##SystemVersionKey##', '##SystemVersionValue##', NULL )  ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblSystemConfig__','##SystemVersionKey##',1,'__tblSystemConfig.IdConfig__: ##SystemVersionKey##; __tblSystemConfig.Value__: ##SystemVersionValue##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblSystemConfig__','##SystemVersionKey##',1,'__tblSystemConfig.IdConfig__: ##SystemVersionKey##; __tblSystemConfig.Value__: ##SystemVersionValue##' ) ]]></Command>
             </Data>
             
         </CheckData>
@@ -404,37 +404,37 @@
                 <!-- Init the data values in table ONLY after first time created table --> 
                 <!-- Always insert the data --> 
                 <Condition Type="none" Action="insert"/> 
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblGroups__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblGroups__ Values('##IDGroup_GUID##',1,1,'##SystemAdministratorsGroupName##','System administrators operators groups, automatic added',CurDate(),CurTime(),1,0,'A59C2E96-044F-49F5-A5D4-4A8C442F4436') ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','##IDGroup_GUID##',1,'__tblGroups.IdGroup__: ##IDGroup_GUID##;__tblGroups.Active__: 1;__tblGroups.SystemAdmin__: 1;__tblGroups.Name__: ##SystemAdministratorsGroupName##;__tblGroups.Comment__: System administrators operators groups, automatic added;__tblGroups.CreatedDate__: @@cur_date@@;__tblGroups.CreatedTime__: @@cur_time@@;__tblGroups.SystemRecord__: 1;__tblGroups.ReadOnlyRecord__: 0;__tblGroups.UpdateControl__: A59C2E96-044F-49F5-A5D4-4A8C442F4436' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblGroups__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblGroups__ Values('##IDGroup_GUID##',1,1,'##SystemAdministratorsGroupName##','System administrators operators groups, automatic added','@@cur_date@@','@@cur_time@@',1,0,'A59C2E96-044F-49F5-A5D4-4A8C442F4436') ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblGroups__','##IDGroup_GUID##',1,'__tblGroups.IdGroup__: ##IDGroup_GUID##;__tblGroups.Active__: 1;__tblGroups.SystemAdmin__: 1;__tblGroups.Name__: ##SystemAdministratorsGroupName##;__tblGroups.Comment__: System administrators operators groups, automatic added;__tblGroups.CreatedDate__: @@cur_date@@;__tblGroups.CreatedTime__: @@cur_time@@;__tblGroups.SystemRecord__: 1;__tblGroups.ReadOnlyRecord__: 0;__tblGroups.UpdateControl__: A59C2E96-044F-49F5-A5D4-4A8C442F4436' ) ]]></Command>
             </Data>
 
             <Data ID="Data02" Event="table_exists" Active="true">
                 <!-- Select * From tblGroups Where IdGroup <> '##IDGroup_GUID##' And Name = '##SystemAdministratorsGroupName##' --> 
                 <Condition Type="where" Action="update"><![CDATA[ __tblGroups.IdGroup__ <> '##IDGroup_GUID##' And __tblGroups.Name__ = '##SystemAdministratorsGroupName##' ]]></Condition> 
                 <Command><![CDATA[ Update __tblGroups__ Set __tblGroups.IdGroup__ = '##IDGroup_GUID##' Where __tblGroups.IdGroup__ = '${Condition.Result.Value(1,__tblGroups.IdGroup__)}$'  ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','##IDGroup_GUID##',2,'__tblGroups.IdGroup__: ${Condition.Result.Value(1,__tblGroups.IdGroup__)}$ -> ##IDGroup_GUID##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblGroups__','##IDGroup_GUID##',2,'__tblGroups.IdGroup__: ${Condition.Result.Value(1,__tblGroups.IdGroup__)}$ -> ##IDGroup_GUID##' ) ]]></Command>
             </Data>
 
             <Data ID="Data03" Event="table_exists" Active="true">
                 <!-- Select * From tblGroups Where SystemAdmin = 1 --> 
                 <Condition Type="where" Action="update"><![CDATA[ __tblGroups.SystemAdmin__ = 0 And __tblGroups.Name__ = '##SystemAdministratorsGroupName##' ]]></Condition> 
                 <Command><![CDATA[ Update __tblGroups__ Set __tblGroups.SystemAdmin__ = 1 Where __tblGroups.IdGroup__ = '${Condition.Result.Value(1,__tblGroups.IdGroup__)}$'  ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','${Condition.Result.Value(1,__tblGroups.IdGroup__)}$',2,'__tblGroups.SystemAdmin__: 0 -> 1' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblGroups__','${Condition.Result.Value(1,__tblGroups.IdGroup__)}$',2,'__tblGroups.SystemAdmin__: 0 -> 1' ) ]]></Command>
             </Data>
 
             <Data ID="Data04" Event="table_exists" Active="true">
                 <!-- Select * From tblGroups Where SystemAdmin = 1 --> 
                 <Condition Type="where" Action="update"><![CDATA[ __tblGroups.SystemAdmin__ = 0 And __tblGroups.IdGroup__ = '##IDGroup_GUID##' ]]></Condition> 
                 <Command><![CDATA[ Update __tblGroups__ Set __tblGroups.SystemAdmin__ = 1 Where __tblGroups.IdGroup__ = ##IDGroup_GUID##  ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','##IDGroup_GUID##',2,'__tblGroups.SystemAdmin__: 0 -> 1' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblGroups__','##IDGroup_GUID##',2,'__tblGroups.SystemAdmin__: 0 -> 1' ) ]]></Command>
             </Data>
              
             <Data ID="Data05" Event="table_exists" Active="true">
                 <!-- Select * From tblGroups Where SystemAdmin = 1 --> 
                 <Condition Type="where" Action="insert"><![CDATA[ __tblGroups.SystemAdmin__ = 1 ]]></Condition> 
-                <Command><![CDATA[ Insert Into __tblGroups__ Values('##IDGroup_GUID##',1,1,'##SystemAdministratorsGroupName##','System administrators operators groups, automatic added',CurDate(),CurTime(),1,0,'A59C2E96-044F-49F5-A5D4-4A8C442F4436') ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblGroups__','##IDGroup_GUID##',1,'__tblGroups.IdGroup__: ##IDGroup_GUID##;__tblGroups.Active__: 1;__tblGroups.SystemAdmin__: 1;__tblGroups.Name__: ##SystemAdministratorsGroupName##;__tblGroups.Comment__: System administrators operators groups, automatic added;__tblGroups.CreatedDate__: @@cur_date@@;__tblGroups.CreatedTime__: @@cur_time@@;__tblGroups.SystemRecord__: 1;__tblGroups.ReadOnlyRecord__: 0;__tblGroups.UpdateControl__: A59C2E96-044F-49F5-A5D4-4A8C442F4436' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblGroups__ Values('##IDGroup_GUID##',1,1,'##SystemAdministratorsGroupName##','System administrators operators groups, automatic added','@@cur_date@@','@@cur_time@@',1,0,'A59C2E96-044F-49F5-A5D4-4A8C442F4436') ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblGroups__','##IDGroup_GUID##',1,'__tblGroups.IdGroup__: ##IDGroup_GUID##;__tblGroups.Active__: 1;__tblGroups.SystemAdmin__: 1;__tblGroups.Name__: ##SystemAdministratorsGroupName##;__tblGroups.Comment__: System administrators operators groups, automatic added;__tblGroups.CreatedDate__: @@cur_date@@;__tblGroups.CreatedTime__: @@cur_time@@;__tblGroups.SystemRecord__: 1;__tblGroups.ReadOnlyRecord__: 0;__tblGroups.UpdateControl__: A59C2E96-044F-49F5-A5D4-4A8C442F4436' ) ]]></Command>
             </Data> 
 
         </CheckData> 
@@ -545,9 +545,9 @@
                 <!-- Init the data values in table ONLY after first time created table --> 
                 <!-- Always insert the data default password 123englishchick --> 
                 <Condition Type="none" Action="insert"/> 
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblOperators__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblOperators__ Values('##IDOperator_GUID##','##IDGroup_GUID##',1, 1,'##SystemAdministratorOperatorName##', 'NDpB5qONHF/rFh5fPfkHnUHXUgjz8mqBPMhvsdy4Trh1YltV9KEJY90SLCseGjYUrTzXkeTFOKl0ak0psZaFQw==','System administrator operator, automatic added',CurDate(),CurTime(),1,0,'14286358-409A-4D00-8CD4-75512DF204CF') ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblOperators__','##IDOperator_GUID##',1,'__tblOperators.IdOperator__: ##IDOperator_GUID##; __tblOperators.IdGroup__: ##IDGroup_GUID##;__tblOperators.Active__: 1;__tblOperators.ShowInList__: 1;__tblOperators.Name__: ##SystemAdministratorOperatorName##;__tblOperators.Password__: xXx;__tblOperators.Comment__: System administrator operator, automatic added;__tblOperators.CreatedDate__: @@cur_date@@;__tblOperators.CreatedTime__: @@cur_time@@;__tblOperators.SystemRecord__: 1;__tblOperators.ReadOnlyRecord__: 0;__tblOperators.UpdateControl__: 14286358-409A-4D00-8CD4-75512DF204CF' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblOperators__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblOperators__ Values('##IDOperator_GUID##','##IDGroup_GUID##',1, 1,'##SystemAdministratorOperatorName##', 'NDpB5qONHF/rFh5fPfkHnUHXUgjz8mqBPMhvsdy4Trh1YltV9KEJY90SLCseGjYUrTzXkeTFOKl0ak0psZaFQw==','System administrator operator, automatic added','@@cur_date@@','@@cur_time@@',1,0,'14286358-409A-4D00-8CD4-75512DF204CF') ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblOperators__','##IDOperator_GUID##',1,'__tblOperators.IdOperator__: ##IDOperator_GUID##; __tblOperators.IdGroup__: ##IDGroup_GUID##;__tblOperators.Active__: 1;__tblOperators.ShowInList__: 1;__tblOperators.Name__: ##SystemAdministratorOperatorName##;__tblOperators.Password__: xXx;__tblOperators.Comment__: System administrator operator, automatic added;__tblOperators.CreatedDate__: @@cur_date@@;__tblOperators.CreatedTime__: @@cur_time@@;__tblOperators.SystemRecord__: 1;__tblOperators.ReadOnlyRecord__: 0;__tblOperators.UpdateControl__: 14286358-409A-4D00-8CD4-75512DF204CF' ) ]]></Command>
             </Data>
 
             <Data ID="Data02" Event="table_exists" Active="true">
@@ -555,15 +555,15 @@
                 <!-- Default password 123englishchick --> 
                 <Condition Type="where" Action="update"><![CDATA[ __tblOperators.IdOperator__ = '##IDOperator_GUID##' And __tblOperators.IdGroup__ <> '##IDGroup_GUID##' ]]></Condition> 
                 <Command><![CDATA[ Update __tblOperators__ Set __tblOperators.IdGroup__ = '##IDGroup_GUID##' Where __tblOperators.IdOperator__ = ##IDOperator_GUID## ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblOperators__','##IDOperator_GUID##',2,'__tblOperators.IdGroup__: ${Condition.Result.Value(1,__tblOperators.IdGroup__)}$ -> ##IDGroup_GUID##' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblOperators__','##IDOperator_GUID##',2,'__tblOperators.IdGroup__: ${Condition.Result.Value(1,__tblOperators.IdGroup__)}$ -> ##IDGroup_GUID##' ) ]]></Command>
             </Data> 
 
             <Data ID="Data03" Event="table_exists" Active="true">
                 <!-- Select * From tblOperators Where IdGroup = Group_GUID --> 
                 <!-- Default password 123englishchick --> 
                 <Condition Type="where" Action="insert"><![CDATA[ __tblOperators.IdGroup__ = '##IDGroup_GUID##' ]]></Condition> 
-                <Command><![CDATA[ Insert Into __tblOperators__ Values('##IDOperator_GUID##','##IDGroup_GUID##',1, 1,'##SystemAdministratorOperatorName##', 'NDpB5qONHF/rFh5fPfkHnUHXUgjz8mqBPMhvsdy4Trh1YltV9KEJY90SLCseGjYUrTzXkeTFOKl0ak0psZaFQw==','System administrator operator, automatic added',CurDate(),CurTime(),1,0,'14286358-409A-4D00-8CD4-75512DF204CF') ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblOperators__','##IDOperator_GUID##',1,'__tblOperators.IdOperator__: ##IDOperator_GUID##; __tblOperators.IdGroup__: ##IDGroup_GUID##;__tblOperators.Active__: 1;__tblOperators.ShowInList__: 1;__tblOperators.Name__: ##SystemAdministratorOperatorName##;__tblOperators.Password__: xXx;__tblOperators.Comment__: System administrator operator, automatic added;__tblOperators.CreatedDate__: @@cur_date@@;__tblOperators.CreatedTime__: @@cur_time@@;__tblOperators.SystemRecord__: 1;__tblOperators.ReadOnlyRecord__: 0;__tblOperators.UpdateControl__: 14286358-409A-4D00-8CD4-75512DF204CF' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblOperators__ Values('##IDOperator_GUID##','##IDGroup_GUID##',1, 1,'##SystemAdministratorOperatorName##', 'NDpB5qONHF/rFh5fPfkHnUHXUgjz8mqBPMhvsdy4Trh1YltV9KEJY90SLCseGjYUrTzXkeTFOKl0ak0psZaFQw==','System administrator operator, automatic added','@@cur_date@@','@@cur_time@@',1,0,'14286358-409A-4D00-8CD4-75512DF204CF') ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblOperators__','##IDOperator_GUID##',1,'__tblOperators.IdOperator__: ##IDOperator_GUID##; __tblOperators.IdGroup__: ##IDGroup_GUID##;__tblOperators.Active__: 1;__tblOperators.ShowInList__: 1;__tblOperators.Name__: ##SystemAdministratorOperatorName##;__tblOperators.Password__: xXx;__tblOperators.Comment__: System administrator operator, automatic added;__tblOperators.CreatedDate__: @@cur_date@@;__tblOperators.CreatedTime__: @@cur_time@@;__tblOperators.SystemRecord__: 1;__tblOperators.ReadOnlyRecord__: 0;__tblOperators.UpdateControl__: 14286358-409A-4D00-8CD4-75512DF204CF' ) ]]></Command>
             </Data> 
 
         </CheckData> 
@@ -665,17 +665,17 @@
             <Data ID="Data01" Event="table_created" Active="true">
                 <!-- Init the data values in table ONLY after first time created table --> 
                 <Condition Type="none" Action="insert"/> 
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblModules__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblModules__ Values('##IDMainModule_GUID##',1, 1,'Main.Module', 'Logical módule for main application, automatic added',CurDate(),CurTime(),1,0,NULL) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblModules__','##IDMainModule_GUID##',1,'__tblModules.IdModule__: ##IDMainModule_GUID##;__tblModules.ActiveUI__: 1;__tblModules.ActiveBackend__: 1;__tblModules.Name__: Main.Module;__tblModules.Comment__: Logical module for main application, automatic added;__tblModules.CreatedDate__: @@cur_date@@;__tblModules.CreatedTime__: @@cur_time@@;__tblModules.SystemRecord__: 1;__tblModules.ReadOnlyRecord__: 0;__tblModules.UpdateControl__: NULL' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblModules__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblModules__ Values('##IDMainModule_GUID##',1, 1,'Main.Module', 'Logical módule for main application, automatic added','@@cur_date@@','@@cur_time@@',1,0,NULL) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblModules__','##IDMainModule_GUID##',1,'__tblModules.IdModule__: ##IDMainModule_GUID##;__tblModules.ActiveUI__: 1;__tblModules.ActiveBackend__: 1;__tblModules.Name__: Main.Module;__tblModules.Comment__: Logical module for main application, automatic added;__tblModules.CreatedDate__: @@cur_date@@;__tblModules.CreatedTime__: @@cur_time@@;__tblModules.SystemRecord__: 1;__tblModules.ReadOnlyRecord__: 0;__tblModules.UpdateControl__: NULL' ) ]]></Command>
             </Data>
          
             <Data ID="Data02" Event="table_exists" Active="true">
                 <!-- Select * From tblModules Where IdModule = Module_GUID --> 
                 <!-- Default password 123englishchick --> 
                 <Condition Type="where" Action="insert"><![CDATA[ __tblModules.IdModule__ = '##IDMainModule_GUID##' ]]></Condition> 
-                <Command><![CDATA[ Insert Into __tblModules__ Values('##IDMainModule_GUID##',1, 1,'Main.Module', 'Logical módule for main application, automatic added',CurDate(),CurTime(),1,0,NULL) ]]></Command>
-                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess',CurDate(),CurTime(),'__tblModules__','##IDMainModule_GUID##',1,'__tblModules.IdModule__: ##IDMainModule_GUID##;__tblModules.ActiveUI__: 1;__tblModules.ActiveBackend__: 1;__tblModules.Name__: Main.Module;__tblModules.Comment__: Logical module for main application, automatic added;__tblModules.CreatedDate__: @@cur_date@@;__tblModules.CreatedTime__: @@cur_time@@;__tblModules.SystemRecord__: 1;__tblModules.ReadOnlyRecord__: 0;__tblModules.UpdateControl__: NULL' ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblModules__ Values('##IDMainModule_GUID##',1, 1,'Main.Module', 'Logical módule for main application, automatic added','@@cur_date@@','@@cur_time@@',1,0,NULL) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditDB__ Values( NULL,'BPProcess','@@cur_date@@','@@cur_time@@','__tblModules__','##IDMainModule_GUID##',1,'__tblModules.IdModule__: ##IDMainModule_GUID##;__tblModules.ActiveUI__: 1;__tblModules.ActiveBackend__: 1;__tblModules.Name__: Main.Module;__tblModules.Comment__: Logical module for main application, automatic added;__tblModules.CreatedDate__: @@cur_date@@;__tblModules.CreatedTime__: @@cur_time@@;__tblModules.SystemRecord__: 1;__tblModules.ReadOnlyRecord__: 0;__tblModules.UpdateControl__: NULL' ) ]]></Command>
             </Data> 
          
         </CheckData>
@@ -776,7 +776,7 @@
             <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
 
             <Data ID="Data01" Event="table_created" Active="true">
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblActions__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblActions__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data>
          
         </CheckData>
@@ -872,7 +872,7 @@
             <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
 
             <Data ID="Data01" Event="table_created" Active="true">
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblPrivileges__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblPrivileges__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data>
          
         </CheckData>
@@ -964,7 +964,7 @@
             <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
 
             <Data ID="Data01" Event="table_created" Active="true">
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblRestrictions__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblRestrictions__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data>
          
         </CheckData>
@@ -1049,7 +1049,7 @@
             <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
 
             <Data ID="Data01" Event="table_created" Active="true">
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblModulesConfig__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblModulesConfig__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data>
          
         </CheckData>
@@ -1132,7 +1132,7 @@
             <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
 
             <Data ID="Data01" Event="table_created" Active="true">
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblOperatorsConfig__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblOperatorsConfig__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data>
          
         </CheckData>
@@ -1215,7 +1215,7 @@
             <!-- Supported macros = @@table_name@@ @@cur_date@@ @@cur_time@@ @@cur_date_time@@-->
 
             <Data ID="Data01" Event="table_created" Active="true">
-                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable',CurDate(),CurTime(),'Automatic created table __tblGroupsConfig__ by Business Process Services Layer',CurDate(),CurTime() ) ]]></Command>
+                <Command><![CDATA[ Insert Into __tblAuditSystem__ Values( NULL,'##UserName.Process##','CreatedTable','@@cur_date@@','@@cur_time@@','Automatic created table __tblGroupsConfig__ by Business Process Services Layer','@@cur_date@@','@@cur_time@@' ) ]]></Command>
             </Data>
          
         </CheckData>

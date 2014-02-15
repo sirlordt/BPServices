@@ -159,7 +159,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 		   
 			if ( ConfigSectionNode.hasAttributes() == true ) {
 		
-				String strAttributesOrder[] = { ConstantsCommonConfigXMLTags._Global_Date_Time_Format, ConstantsCommonConfigXMLTags._Global_Date_Format, ConstantsCommonConfigXMLTags._Global_Time_Format, ConstantsCommonConfigXMLTags._Temp_Dir, ConstantsConfigXMLTags._BPServices_Dir, ConstantsCommonConfigXMLTags._Responses_Formats_Dir, ConstantsCommonConfigXMLTags._Default_Response_Format, ConstantsCommonConfigXMLTags._Default_Response_Format_Version, ConstantsCommonConfigXMLTags._Internal_Fetch_Size, ConstantsCommonConfigXMLTags._Response_Request_Method, ConstantsCommonConfigXMLTags._Request_Timeout, ConstantsCommonConfigXMLTags._Socket_Timeout };
+				String strAttributesOrder[] = { ConstantsCommonConfigXMLTags._Global_Date_Time_Format, ConstantsCommonConfigXMLTags._Global_Date_Format, ConstantsCommonConfigXMLTags._Global_Time_Format, ConstantsCommonConfigXMLTags._Temp_Dir, ConstantsConfigXMLTags._Services_Dir, ConstantsCommonConfigXMLTags._Responses_Formats_Dir, ConstantsCommonConfigXMLTags._Default_Response_Format, ConstantsCommonConfigXMLTags._Default_Response_Format_Version, ConstantsCommonConfigXMLTags._Internal_Fetch_Size, ConstantsCommonConfigXMLTags._Response_Request_Method, ConstantsCommonConfigXMLTags._Request_Timeout, ConstantsCommonConfigXMLTags._Socket_Timeout };
 
 				NamedNodeMap NodeAttributes = ConfigSectionNode.getAttributes();
 
@@ -271,7 +271,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 						    }
 						
 						}
-						else if ( NodeAttribute.getNodeName().equals( ConstantsConfigXMLTags._BPServices_Dir ) ) {
+						else if ( NodeAttribute.getNodeName().equals( ConstantsConfigXMLTags._Services_Dir ) ) {
 
 							this.strServicesDir = NodeAttribute.getNodeValue();
 		
@@ -281,7 +281,7 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 						        	
 						    }
 
-					        Logger.logMessage( "1", Lang.translate( "Runtime config value [%s] changed to: [%s]", "strDBServicesDir", this.strServicesDir ) );
+					        Logger.logMessage( "1", Lang.translate( "Runtime config value [%s] changed to: [%s]", "strServicesDir", this.strServicesDir ) );
 				        
 					        if ( Utilities.checkDir( this.strServicesDir, Logger, Lang ) == false ) {
 						    	
@@ -478,9 +478,9 @@ public class CConfigServicesManager extends CAbstractConfigLoader {
 		            }
 		            else {
 
-				        if ( strAttributesOrder[ intAttributesIndex ].equals( ConstantsConfigXMLTags._BPServices_Dir ) ) {
+				        if ( strAttributesOrder[ intAttributesIndex ].equals( ConstantsConfigXMLTags._Services_Dir ) ) {
 		            		
-					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsConfigXMLTags._BPServices_Dir, this.strServicesDir ) );
+					        Logger.logWarning( "-1", Lang.translate( "The [%s] attribute not found, using the default value [%s]", ConstantsConfigXMLTags._Services_Dir, this.strServicesDir ) );
 
 					        if ( Utilities.checkDir( this.strServicesDir, Logger, Lang ) == false ) {
 						    	

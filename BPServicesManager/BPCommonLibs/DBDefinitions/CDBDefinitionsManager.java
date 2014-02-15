@@ -1851,7 +1851,7 @@ public class CDBDefinitionsManager {
 
 						Logger.logData( "1", Lang.translate( "Trying to execute the creation command on database [%s]", ConfigDBConnection.strDatabase ), strCreateDefinitionCommand );
 						
-						ArrayList<LinkedHashMap<String, String>> Result = BackendServicesManager.callServiceSystemExecuteSQLParsed( HTTPClient, strURL, ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strCreateDefinitionCommand, null, Logger, Lang );
+						ArrayList<LinkedHashMap<String, String>> Result = BackendServicesManager.callServiceSystemExecuteDBCommandParsed( HTTPClient, strURL, ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strCreateDefinitionCommand, null, Logger, Lang );
 						
 						if ( Result != null && Result.size() > 0 && Result.get( 0 ) != null ) {
 							
@@ -1969,7 +1969,7 @@ public class CDBDefinitionsManager {
 
 				//Logger.logMessage( "1", Lang.translate( "Trying to execute alter field definition for field [%s] in table [%s] on database [%s]", DBFieldDefinitionClone.strName, DBTableDefinitionClone.strName, DBConnectionConfig.strDatabase ), strAlterFieldCommand );
 				
-				ArrayList<LinkedHashMap<String, String>> Result = BackendServicesManager.callServiceSystemExecuteSQLParsed( HTTPClient, strURL, ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strAlterFieldDefinition, null, Logger, Lang );
+				ArrayList<LinkedHashMap<String, String>> Result = BackendServicesManager.callServiceSystemExecuteDBCommandParsed( HTTPClient, strURL, ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strAlterFieldDefinition, null, Logger, Lang );
 				
 				if ( Result != null && Result.size() > 0 && Result.get( 0 ) != null ) {
 					
@@ -2045,7 +2045,7 @@ public class CDBDefinitionsManager {
 
 				//Logger.logMessage( "1", Lang.translate( "Trying to execute alter field definition for field [%s] in table [%s] on database [%s]", DBFieldDefinitionClone.strName, DBTableDefinitionClone.strName, DBConnectionConfig.strDatabase ), strAlterFieldCommand );
 				
-				ArrayList<LinkedHashMap<String, String>> Result = BackendServicesManager.callServiceSystemExecuteSQLParsed( HTTPClient, strURL, ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strAddFieldDefinition, null, Logger, Lang );
+				ArrayList<LinkedHashMap<String, String>> Result = BackendServicesManager.callServiceSystemExecuteDBCommandParsed( HTTPClient, strURL, ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strAddFieldDefinition, null, Logger, Lang );
 				
 				if ( Result != null && Result.size() > 0 && Result.get( 0 ) != null ) {
 					
@@ -2352,7 +2352,7 @@ public class CDBDefinitionsManager {
 
 										Logger.logMessage( "1", Lang.translate( "Trying to execute the command [%s] in table [%s] on database [%s]", strCommand, DBTableDefinitionClone.strName, ConfigDBConnection.strDatabase ) );
 
-										BackendServicesManager.callServiceSystemExecuteSQLResponseToFile( HTTPClient, ConfigDBConnection.getURLBackend(), ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strCommand, null, Logger, Lang );
+										BackendServicesManager.callServiceSystemExecuteDBCommandResponseToFile( HTTPClient, ConfigDBConnection.getURLBackend(), ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strCommand, null, Logger, Lang );
 
 									}
 
@@ -2368,9 +2368,9 @@ public class CDBDefinitionsManager {
 								String strResponseFilePathName = "";
 
 								if ( DBDataDefinition.intType == 1 ) //Where
-									strResponseFilePathName = BackendServicesManager.callServiceSystemExecuteSQLResponseToFile( HTTPClient, ConfigDBConnection.getURLBackend(), ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, "Select * From " + DBTableDefinitionClone.strName + " Where " + strCondition, null, Logger, Lang );
+									strResponseFilePathName = BackendServicesManager.callServiceSystemExecuteDBCommandResponseToFile( HTTPClient, ConfigDBConnection.getURLBackend(), ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, "Select * From " + DBTableDefinitionClone.strName + " Where " + strCondition, null, Logger, Lang );
 								else if ( DBDataDefinition.intType == 2 ) //Full
-									strResponseFilePathName = BackendServicesManager.callServiceSystemExecuteSQLResponseToFile( HTTPClient, ConfigDBConnection.getURLBackend(), ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strCondition, null, Logger, Lang );
+									strResponseFilePathName = BackendServicesManager.callServiceSystemExecuteDBCommandResponseToFile( HTTPClient, ConfigDBConnection.getURLBackend(), ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strCondition, null, Logger, Lang );
 
 								boolean bIsResponseWithRows = BackendServicesManager.isResponseWithRows( strResponseFilePathName, Logger, Lang ); 
 
@@ -2384,7 +2384,7 @@ public class CDBDefinitionsManager {
 
 											Logger.logMessage( "1", Lang.translate( "Trying to execute the command [%s] in table [%s] on database [%s]", strCommand, DBTableDefinitionClone.strName, ConfigDBConnection.strDatabase ) );
 
-											BackendServicesManager.callServiceSystemExecuteSQLResponseToFile( HTTPClient, ConfigDBConnection.getURLBackend(), ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strCommand, null, Logger, Lang );
+											BackendServicesManager.callServiceSystemExecuteDBCommandResponseToFile( HTTPClient, ConfigDBConnection.getURLBackend(), ConfigDBConnection.getConfigProxy(), strSecurityTokenID, strTransactionID, strCommand, null, Logger, Lang );
 
 										}
 

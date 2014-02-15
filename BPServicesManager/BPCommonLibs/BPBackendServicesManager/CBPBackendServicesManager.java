@@ -789,7 +789,7 @@ public class CBPBackendServicesManager extends CBackendServicesManager {
     	
     }
     
-    public String callServiceSystemExecuteSQLResponseToFile( CloseableHttpClient HTTPClient, String strURL, CConfigProxy ConfigProxy, String strSecurityTokenID, String strTransactionID, String strSQL, LinkedHashMap<String,String> Params, CExtendedLogger Logger, CLanguage Lang ) {
+    public String callServiceSystemExecuteDBCommandResponseToFile( CloseableHttpClient HTTPClient, String strURL, CConfigProxy ConfigProxy, String strSecurityTokenID, String strTransactionID, String strSQL, LinkedHashMap<String,String> Params, CExtendedLogger Logger, CLanguage Lang ) {
 
     	String strResult = "";
     	
@@ -806,7 +806,7 @@ public class CBPBackendServicesManager extends CBackendServicesManager {
     		PostData.setHeader( "User-Agent", "/BPServices" );
     	 
     		ArrayList<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-    		urlParameters.add( new BasicNameValuePair( "ServiceName", "System.Execute.SQL" ) );
+    		urlParameters.add( new BasicNameValuePair( "ServiceName", "System.Execute.DBCommand" ) );
     		urlParameters.add( new BasicNameValuePair( "SecurityTokenID", strSecurityTokenID ) );
     		urlParameters.add( new BasicNameValuePair( "TransactionID", strTransactionID ) );
     		urlParameters.add( new BasicNameValuePair( "SQL", strSQL ) );
@@ -831,7 +831,7 @@ public class CBPBackendServicesManager extends CBackendServicesManager {
 			else
 				Response = HTTPClient.execute( PostData, Context );
 			
-			String strResponseFileName = "System.Execute.SQL.Response." + this.strGUID + "." + UUID.randomUUID().toString();
+			String strResponseFileName = "System.Execute.DBCommand.Response." + this.strGUID + "." + UUID.randomUUID().toString();
 			
 			if ( Response != null && this.saveResponseToFile( Response.getEntity().getContent(), strPathToTempDir, strResponseFileName, Logger, Lang ) ) { 
 
@@ -852,7 +852,7 @@ public class CBPBackendServicesManager extends CBackendServicesManager {
     	
     }
     
-    public ArrayList<LinkedHashMap<String,String>> callServiceSystemExecuteSQLParsed( CloseableHttpClient HTTPClient, String strURL, CConfigProxy ConfigProxy, String strSecurityTokenID, String strTransactionID, String strSQL, LinkedHashMap<String,String> Params, CExtendedLogger Logger, CLanguage Lang ) {
+    public ArrayList<LinkedHashMap<String,String>> callServiceSystemExecuteDBCommandParsed( CloseableHttpClient HTTPClient, String strURL, CConfigProxy ConfigProxy, String strSecurityTokenID, String strTransactionID, String strSQL, LinkedHashMap<String,String> Params, CExtendedLogger Logger, CLanguage Lang ) {
 
     	ArrayList<LinkedHashMap<String,String>> Result = new ArrayList<LinkedHashMap<String,String>>();
     	
@@ -869,7 +869,7 @@ public class CBPBackendServicesManager extends CBackendServicesManager {
     		PostData.setHeader( "User-Agent", "/BPServices" );
     	 
     		ArrayList<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-    		urlParameters.add( new BasicNameValuePair( "ServiceName", "System.Execute.SQL" ) );
+    		urlParameters.add( new BasicNameValuePair( "ServiceName", "System.Execute.DBCommand" ) );
     		urlParameters.add( new BasicNameValuePair( "SecurityTokenID", strSecurityTokenID ) );
     		urlParameters.add( new BasicNameValuePair( "TransactionID", strTransactionID ) );
     		urlParameters.add( new BasicNameValuePair( "SQL", strSQL ) );
@@ -894,7 +894,7 @@ public class CBPBackendServicesManager extends CBackendServicesManager {
 			else
 				Response = HTTPClient.execute( PostData, Context );
 			
-			String strResponseFile = "System.Execute.SQL.Response." + this.strGUID + "." + UUID.randomUUID().toString();
+			String strResponseFile = "System.Execute.DBCommand.Response." + this.strGUID + "." + UUID.randomUUID().toString();
 			
 			if ( Response != null && this.saveResponseToFile( Response.getEntity().getContent(), strPathToTempDir, strResponseFile, Logger, Lang ) ) { 
 
